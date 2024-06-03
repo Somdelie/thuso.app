@@ -1,33 +1,365 @@
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
+  @tailwind components;
+  @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+  @layer base {
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 224 71.4% 4.1%;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+      --card: 0 0% 100%;
+      --card-foreground: 224 71.4% 4.1%;
+
+      --popover: 0 0% 100%;
+      --popover-foreground: 224 71.4% 4.1%;
+
+      --primary: 220.9 39.3% 11%;
+      --primary-foreground: 210 20% 98%;
+
+      --secondary: 220 14.3% 95.9%;
+      --secondary-foreground: 220.9 39.3% 11%;
+
+      --muted: 220 14.3% 95.9%;
+      --muted-foreground: 220 8.9% 46.1%;
+
+      --accent: 220 14.3% 95.9%;
+      --accent-foreground: 220.9 39.3% 11%;
+
+      --destructive: 0 84.2% 60.2%;
+      --destructive-foreground: 210 20% 98%;
+
+      --border: 220 13% 91%;
+      --input: 220 13% 91%;
+      --ring: 224 71.4% 4.1%;
+
+      --radius: 0.5rem;
+    }
+
+    .dark {
+      --background: 224 71.4% 4.1%;
+      --foreground: 210 20% 98%;
+
+      --card: 224 71.4% 4.1%;
+      --card-foreground: 210 20% 98%;
+
+      --popover: 224 71.4% 4.1%;
+      --popover-foreground: 210 20% 98%;
+
+      --primary: 210 20% 98%;
+      --primary-foreground: 220.9 39.3% 11%;
+
+      --secondary: 215 27.9% 16.9%;
+      --secondary-foreground: 210 20% 98%;
+
+      --muted: 215 27.9% 16.9%;
+      --muted-foreground: 217.9 10.6% 64.9%;
+
+      --accent: 215 27.9% 16.9%;
+      --accent-foreground: 210 20% 98%;
+
+      --destructive: 0 62.8% 30.6%;
+      --destructive-foreground: 210 20% 98%;
+
+      --border: 215 27.9% 16.9%;
+      --input: 215 27.9% 16.9%;
+      --ring: 216 12.2% 83.9%;
+    }
   }
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  @layer base {
+    * {
+      @apply border-border;
+    }
+    body {
+      @apply bg-background text-foreground;
+    }
   }
-}
+
+  .typewriter {
+    --blue: #5cbbff;
+    --blue-dark: #162d72;
+    --key: #fff;
+    --paper: #eef0fd;
+    --text: #00000049;
+    --tool: #ffbb00;
+    --duration: 3s;
+    position: relative;
+    -webkit-animation: bounce05 var(--duration) linear infinite;
+    animation: bounce05 var(--duration) linear infinite;
+  }
+  
+  .typewriter .slide {
+    width: 92px;
+    height: 20px;
+    border-radius: 3px;
+    margin-left: 14px;
+    transform: translateX(14px);
+    background: linear-gradient(var(--blue), var(--blue-dark));
+    -webkit-animation: slide05 var(--duration) ease infinite;
+    animation: slide05 var(--duration) ease infinite;
+  }
+  
+  .typewriter .slide:before,
+  .typewriter .slide:after,
+  .typewriter .slide i:before {
+    content: "";
+    position: absolute;
+    background: var(--tool);
+  }
+  
+  .typewriter .slide:before {
+    width: 2px;
+    height: 8px;
+    top: 6px;
+    left: 100%;
+  }
+  
+  .typewriter .slide:after {
+    left: 94px;
+    top: 3px;
+    height: 14px;
+    width: 6px;
+    border-radius: 3px;
+  }
+  
+  .typewriter .slide i {
+    display: block;
+    position: absolute;
+    right: 100%;
+    width: 6px;
+    height: 4px;
+    top: 4px;
+    background: var(--tool);
+  }
+  
+  .typewriter .slide i:before {
+    right: 100%;
+    top: -2px;
+    width: 4px;
+    border-radius: 2px;
+    height: 14px;
+  }
+  
+  .typewriter .paper {
+    position: absolute;
+    left: 24px;
+    top: -26px;
+    width: 40px;
+    height: 46px;
+    border-radius: 5px;
+    background: var(--paper);
+    transform: translateY(46px);
+    -webkit-animation: paper05 var(--duration) linear infinite;
+    animation: paper05 var(--duration) linear infinite;
+  }
+  
+  .typewriter .paper:before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    top: 7px;
+    border-radius: 2px;
+    height: 4px;
+    transform: scaleY(0.8);
+    background: var(--text);
+    box-shadow: 0 12px 0 var(--text), 0 24px 0 var(--text), 0 36px 0 var(--text);
+  }
+  
+  .typewriter .keyboard {
+    width: 120px;
+    height: 56px;
+    margin-top: -10px;
+    z-index: 1;
+    position: relative;
+  }
+  
+  .typewriter .keyboard:before,
+  .typewriter .keyboard:after {
+    content: "";
+    position: absolute;
+  }
+  
+  .typewriter .keyboard:before {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 7px;
+    background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+    transform: perspective(10px) rotateX(2deg);
+    transform-origin: 50% 100%;
+  }
+  
+  .typewriter .keyboard:after {
+    left: 2px;
+    top: 25px;
+    width: 11px;
+    height: 4px;
+    border-radius: 2px;
+    box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key), 45px 0 0 var(--key),
+      60px 0 0 var(--key), 75px 0 0 var(--key), 90px 0 0 var(--key),
+      22px 10px 0 var(--key), 37px 10px 0 var(--key), 52px 10px 0 var(--key),
+      60px 10px 0 var(--key), 68px 10px 0 var(--key), 83px 10px 0 var(--key);
+    -webkit-animation: keyboard05 var(--duration) linear infinite;
+    animation: keyboard05 var(--duration) linear infinite;
+  }
+  
+  @keyframes bounce05 {
+    85%,
+    92%,
+    100% {
+      transform: translateY(0);
+    }
+  
+    89% {
+      transform: translateY(-4px);
+    }
+  
+    95% {
+      transform: translateY(2px);
+    }
+  }
+  
+  @keyframes slide05 {
+    5% {
+      transform: translateX(14px);
+    }
+  
+    15%,
+    30% {
+      transform: translateX(6px);
+    }
+  
+    40%,
+    55% {
+      transform: translateX(0);
+    }
+  
+    65%,
+    70% {
+      transform: translateX(-4px);
+    }
+  
+    80%,
+    89% {
+      transform: translateX(-12px);
+    }
+  
+    100% {
+      transform: translateX(14px);
+    }
+  }
+  
+  @keyframes paper05 {
+    5% {
+      transform: translateY(46px);
+    }
+  
+    20%,
+    30% {
+      transform: translateY(34px);
+    }
+  
+    40%,
+    55% {
+      transform: translateY(22px);
+    }
+  
+    65%,
+    70% {
+      transform: translateY(10px);
+    }
+  
+    80%,
+    85% {
+      transform: translateY(0);
+    }
+  
+    92%,
+    100% {
+      transform: translateY(46px);
+    }
+  }
+  
+  @keyframes keyboard05 {
+    5%,
+    12%,
+    21%,
+    30%,
+    39%,
+    48%,
+    57%,
+    66%,
+    75%,
+    84% {
+      box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key), 45px 0 0 var(--key),
+        60px 0 0 var(--key), 75px 0 0 var(--key), 90px 0 0 var(--key),
+        22px 10px 0 var(--key), 37px 10px 0 var(--key), 52px 10px 0 var(--key),
+        60px 10px 0 var(--key), 68px 10px 0 var(--key), 83px 10px 0 var(--key);
+    }
+  
+    9% {
+      box-shadow: 15px 2px 0 var(--key), 30px 0 0 var(--key), 45px 0 0 var(--key),
+        60px 0 0 var(--key), 75px 0 0 var(--key), 90px 0 0 var(--key),
+        22px 10px 0 var(--key), 37px 10px 0 var(--key), 52px 10px 0 var(--key),
+        60px 10px 0 var(--key), 68px 10px 0 var(--key), 83px 10px 0 var(--key);
+    }
+  
+    18% {
+      box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key), 45px 0 0 var(--key),
+        60px 2px 0 var(--key), 75px 0 0 var(--key), 90px 0 0 var(--key),
+        22px 10px 0 var(--key), 37px 10px 0 var(--key), 52px 10px 0 var(--key),
+        60px 10px 0 var(--key), 68px 10px 0 var(--key), 83px 10px 0 var(--key);
+    }
+  
+    27% {
+      box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key), 45px 0 0 var(--key),
+        60px 0 0 var(--key), 75px 0 0 var(--key), 90px 0 0 var(--key),
+        22px 12px 0 var(--key), 37px 10px 0 var(--key), 52px 10px 0 var(--key),
+        60px 10px 0 var(--key), 68px 10px 0 var(--key), 83px 10px 0 var(--key);
+    }
+  
+    36% {
+      box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key), 45px 0 0 var(--key),
+        60px 0 0 var(--key), 75px 0 0 var(--key), 90px 0 0 var(--key),
+        22px 10px 0 var(--key), 37px 10px 0 var(--key), 52px 12px 0 var(--key),
+        60px 12px 0 var(--key), 68px 12px 0 var(--key), 83px 10px 0 var(--key);
+    }
+  
+    45% {
+      box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key), 45px 0 0 var(--key),
+        60px 0 0 var(--key), 75px 0 0 var(--key), 90px 2px 0 var(--key),
+        22px 10px 0 var(--key), 37px 10px 0 var(--key), 52px 10px 0 var(--key),
+        60px 10px 0 var(--key), 68px 10px 0 var(--key), 83px 10px 0 var(--key);
+    }
+  
+    54% {
+      box-shadow: 15px 0 0 var(--key), 30px 2px 0 var(--key), 45px 0 0 var(--key),
+        60px 0 0 var(--key), 75px 0 0 var(--key), 90px 0 0 var(--key),
+        22px 10px 0 var(--key), 37px 10px 0 var(--key), 52px 10px 0 var(--key),
+        60px 10px 0 var(--key), 68px 10px 0 var(--key), 83px 10px 0 var(--key);
+    }
+  
+    63% {
+      box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key), 45px 0 0 var(--key),
+        60px 0 0 var(--key), 75px 0 0 var(--key), 90px 0 0 var(--key),
+        22px 10px 0 var(--key), 37px 10px 0 var(--key), 52px 10px 0 var(--key),
+        60px 10px 0 var(--key), 68px 10px 0 var(--key), 83px 12px 0 var(--key);
+    }
+  
+    72% {
+      box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key), 45px 2px 0 var(--key),
+        60px 0 0 var(--key), 75px 0 0 var(--key), 90px 0 0 var(--key),
+        22px 10px 0 var(--key), 37px 10px 0 var(--key), 52px 10px 0 var(--key),
+        60px 10px 0 var(--key), 68px 10px 0 var(--key), 83px 10px 0 var(--key);
+    }
+  
+    81% {
+      box-shadow: 15px 0 0 var(--key), 30px 0 0 var(--key), 45px 0 0 var(--key),
+        60px 0 0 var(--key), 75px 0 0 var(--key), 90px 0 0 var(--key),
+        22px 10px 0 var(--key), 37px 12px 0 var(--key), 52px 10px 0 var(--key),
+        60px 10px 0 var(--key), 68px 10px 0 var(--key), 83px 10px 0 var(--key);
+    }
+  }
+  
