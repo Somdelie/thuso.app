@@ -9,10 +9,17 @@ import {
   recruiterOnboardFormControls,
 } from "@/utils";
 import { useUser } from "@clerk/nextjs";
-import { useState } from "react";
+import { createClient } from "@supabase/supabase-js";
+import { useEffect, useState } from "react";
+
+const supabaseClient = createClient(
+  "https://lyfonawvuwlvyluvlokf.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx5Zm9uYXd2dXdsdnlsdXZsb2tmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTc3MDM0ODksImV4cCI6MjAzMzI3OTQ4OX0.NjIi1BkIEluw_y2YezB7Nf1F2jQo6mlbWCZ57-tcLcA"
+);
 
 const Onboard = () => {
   const [currentTab, setCurrentTab] = useState("candidate");
+  const [file, setFile] = useState(null);
   const [recruiterFormData, setRecruiterFormData] = useState(
     initialRecruiterFormData
   );
@@ -23,6 +30,31 @@ const Onboard = () => {
 
   const currentAuthCurrentUser = useUser();
   const { user } = currentAuthCurrentUser;
+
+  const handleFileChange = (event) => {
+    event.preventDefault();
+    setFile(event.target.files[0]);
+  };
+
+  const handleUploadPdfToSupabase = async () => {
+    const { data, error } = await supabaseClient.storage
+      .from("thuso-com")
+      .upload(`/public/${file.name}`, file, {
+        cacheControl: "3600",
+        upsert: false,
+      });
+    console.log(data, error);
+    if (data) {
+      setCandidateFormData({
+        ...candidateFormData,
+        resume: data.path,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (file) handleUploadPdfToSupabase();
+  });
 
   function handleTabChange(value) {
     setCurrentTab(value);
@@ -39,14 +71,29 @@ const Onboard = () => {
     );
   };
 
+  function handleCandidateFormValid() {
+    return Object.keys(candidateFormData).every(
+      (key) => candidateFormData[key].trim() === ""
+    );
+  }
+
   const createProfileAction = async () => {
-    const data = {
-      recruiterInfo: recruiterFormData,
-      role: "recruiter",
-      isPremiumUser: false,
-      userId: user?.id,
-      email: user?.primaryEmailAddress?.emailAddress,
-    };
+    const data =
+      currentTab === "candidate"
+        ? {
+            candidateInfo: candidateFormData,
+            role: "candidate",
+            isPremiumUser: false,
+            userId: user?.id,
+            email: user?.primaryEmailAddress?.emailAddress,
+          }
+        : {
+            recruiterInfo: recruiterFormData,
+            role: "recruiter",
+            isPremiumUser: false,
+            userId: user?.id,
+            email: user?.primaryEmailAddress?.emailAddress,
+          };
 
     await createProfile(data, "/onboard");
   };
@@ -71,10 +118,13 @@ const Onboard = () => {
         </div>
         <TabsContent value="candidate">
           <Form
+            action={createProfileAction}
             formControls={candidateOnboardFormControls}
-            buttonText={"Onboard as recruiter"}
+            buttonText={"Onboard as candidate"}
             formData={candidateFormData}
             setFormData={setCandidateFormData}
+            handleFileChange={handleFileChange}
+            isButtonDisabled={handleCandidateFormValid()}
           />
         </TabsContent>
         <TabsContent value="recruiter">

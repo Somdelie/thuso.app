@@ -5,14 +5,10 @@ import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
+import { MegaMenu } from "./MegaMenu";
 
-const Navbar = ({ user }) => {
+const Navbar = ({ user, profileInfo }) => {
   const menuItems = [
-    {
-      Label: "Home",
-      path: "/",
-      show: true,
-    },
     // this only shown if the user is not logged in
     {
       Label: "Login",
@@ -26,14 +22,14 @@ const Navbar = ({ user }) => {
     },
     // this only shown if the user is logged in
     {
-      Label: "Jobs",
-      path: "/jobs",
+      Label: "Dashboard",
+      path: "/dashboard/jobs",
       show: user,
     },
     {
       Label: "Activity",
       path: "/activity",
-      show: user,
+      show: profileInfo?.role === "candidate",
     },
     {
       Label: "Membership",
@@ -82,18 +78,27 @@ const Navbar = ({ user }) => {
           Thuso.com
         </Link>
         {/* this is a medium and large screen navigation */}
-        <nav className="ml-auto hidden md:flex gap-6">
+        <nav className="ml-auto hidden md:flex gap-2">
+          <Link
+            href="/"
+            className="group inline-flex hover:text-main transition h-9 w-max items-center rounded-md bg-white px-2 py-2 text-sm font-medium"
+          >
+            Home
+          </Link>
+          {/* this is mega menu */}
+          <MegaMenu />
           {menuItems?.map((menuItem) =>
             menuItem.show ? (
               <Link
                 href={menuItem.path}
                 key={menuItem.Label}
-                className="group inline-flex h-9 w-max items-center rounded-md bg-white px-4 py-2 text-sm font-medium"
+                className="group inline-flex hover:text-main transition h-9 w-max items-center rounded-md px-2 py-2 text-sm font-medium"
               >
                 {menuItem.Label}
               </Link>
             ) : null
           )}
+
           {/* this is a logged in user button */}
           <UserButton />
         </nav>

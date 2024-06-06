@@ -20,7 +20,7 @@ const Form = ({
       case "input":
         content = (
           <div
-            className="relative flex items-center mt-4"
+            className="relative flex w-full items-center mt-4"
             key={getCurrentControl.name}
           >
             <Input
