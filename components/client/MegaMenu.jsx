@@ -25,10 +25,10 @@ export function MegaMenu() {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem>
-          <Link href="#">Candidates</Link>
+          <Link href="/candidates">Candidates</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Link href="#">Jobs</Link>
+          <Link href="/jobs">Jobs</Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

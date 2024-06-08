@@ -24,12 +24,12 @@ const Navbar = ({ user, profileInfo }) => {
     {
       Label: "Dashboard",
       path: "/dashboard/jobs",
-      show: user,
+      show: profileInfo?.role !== "candidate",
     },
     {
       Label: "Activity",
       path: "/activity",
-      show: profileInfo?.role === "candidate",
+      show: profileInfo?.role !== "candidate",
     },
     {
       Label: "Membership",

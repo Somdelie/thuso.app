@@ -33,3 +33,10 @@ export async function fetchJobsForRecruiterAction(id) {
 
   return JSON.parse(JSON.stringify(result));
 }
+
+export async function fetchJobsForCandidateAction() {
+  await connectToDb();
+  const result = await Job.find({});
+
+  return JSON.parse(JSON.stringify(result));
+}
