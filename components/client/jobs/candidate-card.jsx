@@ -22,20 +22,21 @@ import {
 } from "@/components/ui/drawer";
 import { useState } from "react";
 import { createJobApplicationAction } from "@/actions";
-const CandidateJobCard = ({ job, jobApplications, profileInfo }) => {
+
+const CandidateJobCard = ({ jobItem, jobApplications, profileInfo }) => {
   const [showJobDetails, setShowJobDetails] = useState(false);
 
-  // console.log(jobApplications);
+  //   console.log(profileInfo);
 
   async function handleJobApplication() {
     await createJobApplicationAction(
       {
-        recruiterUserID: job?.recruiterId,
+        recruiterUserID: jobItem?.recruiterId,
         name: profileInfo?.candidateInfo?.name,
         email: profileInfo?.candidateInfo?.email,
         candidateUserID: profileInfo?.userId,
         status: ["Applied"],
-        jobID: job?.id,
+        jobID: jobItem?._id,
         jobApplicationDate: new Date().toLocaleDateString(),
       },
       "/dashboard/jobs"
@@ -43,19 +44,21 @@ const CandidateJobCard = ({ job, jobApplications, profileInfo }) => {
     setShowJobDetails(false);
   }
 
+  console.log(jobApplications.length, "jobApplications");
+
   return (
     <Drawer open={showJobDetails} onOpenChange={setShowJobDetails}>
       <Card className="hover:-translate-y-2 duration-300">
         <CardHeader>
-          <CardTitle className="text-lg w-full md:text-xl flex items-center gap-3 max-w-full text-ellipsis whitespace-nowrap overflow-hidden font-semibold">
+          <CardTitle className=" w-full md:text-lg flex items-center gap-3 max-w-full text-ellipsis whitespace-nowrap overflow-hidden font-semibold">
             <Icon />{" "}
             <span className="flex-grow w-full">
               {" "}
-              {job?.title?.substring(0, 45)}{" "}
+              {jobItem?.title?.substring(0, 25)}{" "}
             </span>
             <div className="text-sm text-sky-400">
-              {job.companyName ? (
-                <p>{job?.companyName?.substring(0, 45)}</p>
+              {jobItem.companyName ? (
+                <p>{jobItem?.companyName?.substring(0, 45)}</p>
               ) : (
                 <p>N/A</p>
               )}
@@ -63,16 +66,14 @@ const CandidateJobCard = ({ job, jobApplications, profileInfo }) => {
             {/* <span className="text-sm text-gray-400">10 applicants</span> */}
           </CardTitle>
           <CardDescription>
-            {job?.companyName?.substring(0, 45)}
+            {jobItem?.companyName?.substring(0, 45)}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-sm">{job?.description}</p>
-          <p>{job?.location?.substring(0, 45)}...</p>
-          <div className="">
-            <h4 className="font-semibold">Skills Needed</h4>
-            <p>{job?.skills}</p>
-          </div>
+          <p className="text-sm">{jobItem?.description?.substring(0, 45)}...</p>
+          <p className="text-xs text-muted-foreground">
+            {jobItem?.location?.substring(0, 45)}...
+          </p>
         </CardContent>
         <CardFooter>
           <DrawerTrigger>
@@ -86,46 +87,51 @@ const CandidateJobCard = ({ job, jobApplications, profileInfo }) => {
         <DrawerHeader className="px-0">
           <div className="flex items-center justify-between">
             <DrawerTitle className="font-extrabold text-lg md:text-2xl capitalize">
-              {job?.title}
+              {jobItem?.title}
             </DrawerTitle>
             <div className="flex gap-3">
               <Button
                 onClick={handleJobApplication}
                 disabled={
-                  jobApplications.findIndex((item) => item.jobID === job?._id) >
-                  -1
+                  jobApplications.findIndex(
+                    (item) => item.jobID === jobItem?._id
+                  ) > -1
                     ? true
                     : false
                 }
               >
-                Apply
+                {jobApplications.findIndex(
+                  (item) => item.jobID === jobItem?._id
+                ) > -1
+                  ? "Applied"
+                  : "Apply"}
               </Button>
               <Button
                 onClick={() => setShowJobDetails(false)}
-                className="bg-red-600 di hover:bg-red-500 text-white"
+                className="bg-red-600 disabled:opacity-65 hover:bg-red-500 text-white"
               >
                 Cancel
               </Button>
             </div>
           </div>
           <DrawerDescription>
-            <p>{job?.description}</p>
+            <p>{jobItem?.description}</p>
           </DrawerDescription>
         </DrawerHeader>
         <div>
           <p className="capitalize bg-gray-900 flex items-center justify-center text-gray-400 py-1 text-sm whitespace-nowrap rounded w-[100px]">
-            {job?.type}
+            {jobItem?.type}
           </p>
-          {job.location ? (
+          {jobItem.location ? (
             <p className="flex gap-1 items-center my-2">
               <Pin className="text-red-500" size={16} />
-              {job?.location}
+              {jobItem?.location}
             </p>
           ) : (
             ""
           )}
           <div className="flex gap-2 overflow-x-auto">
-            {job?.skills?.split(",").map((skillItem, i) => (
+            {jobItem?.skills?.split(",").map((skillItem, i) => (
               <div
                 key={i}
                 className="w-[100px] flex items-center justify-center h-[35px] bg-black text-white rounded"

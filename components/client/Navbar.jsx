@@ -24,7 +24,7 @@ const Navbar = ({ user, profileInfo }) => {
     {
       Label: "Dashboard",
       path: "/dashboard/jobs",
-      show: profileInfo?.role !== "candidate",
+      show: user,
     },
     {
       Label: "Activity",

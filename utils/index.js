@@ -131,6 +131,13 @@ export const initialCandidateFormData = {
   linkedinProfile: "",
 };
 
+// Example options for select input
+const jobTypeOptions = [
+  { value: "full-time", label: "Full Time" },
+  { value: "part-time", label: "Part Time" },
+  { value: "contract", label: "Contract" },
+];
+
 // this is new job post form controls
 export const postNewJobFormControls = [
   {
@@ -150,7 +157,8 @@ export const postNewJobFormControls = [
     label: "Type",
     name: "type",
     placeholder: "Job Type",
-    componentType: "input",
+    componentType: "select",
+    options: jobTypeOptions, // Adding options for select component
   },
   {
     label: "Location",

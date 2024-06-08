@@ -1,9 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
+"use client";
 import React from "react";
 import PostNewJob from "./PostNewJob";
 import RecruiterJobCard from "./RecruiterJobCard";
+import CandidateJobCard from "./candidate-card";
 
-const JobListing = ({ user, profileInfo, jobList }) => {
+const JobListing = ({ user, profileInfo, jobList, jobApplications }) => {
   return (
     <div>
       <div className="mx-auto max-w-7xl">
@@ -30,9 +32,18 @@ const JobListing = ({ user, profileInfo, jobList }) => {
                     {jobList && jobList.length > 0 ? (
                       jobList?.map((jobItem, i) =>
                         profileInfo?.role === "candidate" ? (
-                          <p key={i}>Candidate Jobs</p>
+                          <CandidateJobCard
+                            key={i}
+                            jobItem={jobItem}
+                            profileInfo={profileInfo}
+                            jobApplications={jobApplications}
+                          />
                         ) : (
-                          <RecruiterJobCard key={i} jobItem={jobItem} />
+                          <RecruiterJobCard
+                            key={i}
+                            jobItem={jobItem}
+                            jobApplications={jobApplications}
+                          />
                         )
                       )
                     ) : (

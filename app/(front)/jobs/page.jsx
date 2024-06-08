@@ -1,4 +1,9 @@
-import { fetchJobsForCandidateAction, fetchProfile } from "@/actions";
+import {
+  fetchJobApplicationsForCaRecruiter,
+  fetchJobApplicationsForCandidate,
+  fetchJobsForCandidateAction,
+  fetchProfile,
+} from "@/actions";
 import CandidateJobCard from "@/components/client/jobs/CandidateJobCard";
 import { currentUser } from "@clerk/nextjs/server";
 
@@ -7,7 +12,10 @@ const JobsPage = async () => {
   const profileInfo = await fetchProfile(user?.id);
   const jobList = await fetchJobsForCandidateAction();
 
-  // console.log(jobList);
+  const getJobApplicationList =
+    profileInfo?.role === "candidate"
+      ? await fetchJobApplicationsForCandidate(user?.id)
+      : await fetchJobApplicationsForCaRecruiter(user?.id);
 
   return (
     <div className="mx-auto max-w-7xl">
@@ -18,7 +26,12 @@ const JobsPage = async () => {
       </div>
       <div className="grid grid-cols-1 pt-8 md:grid-cols-3 gap-4">
         {jobList?.map((job, i) => (
-          <CandidateJobCard key={i} job={job} />
+          <CandidateJobCard
+            key={i}
+            job={job}
+            profileInfo={profileInfo}
+            jobApplications={getJobApplicationList}
+          />
         ))}
       </div>
     </div>

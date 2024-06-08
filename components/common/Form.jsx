@@ -2,6 +2,15 @@ import React from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 const Form = ({
   action,
@@ -57,6 +66,38 @@ const Form = ({
           </Label>
         );
 
+        break;
+
+      case "select":
+        content = (
+          <div
+            className="relative flex w-full items-center mt-4"
+            key={getCurrentControl.name}
+          >
+            <Select
+              onValueChange={(value) =>
+                setFormData({
+                  ...formData,
+                  [getCurrentControl.name]: value,
+                })
+              }
+            >
+              <SelectTrigger className="w-full bg-sky-100">
+                <SelectValue placeholder={getCurrentControl.placeholder} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>{getCurrentControl.label}</SelectLabel>
+                  {getCurrentControl?.options?.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+        );
         break;
 
       default:

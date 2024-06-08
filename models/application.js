@@ -6,9 +6,12 @@ const ApplicationSchema = new mongoose.Schema(
     name: String,
     email: String,
     candidateUserID: String,
-    status: Array,
+    status: [Array],
     jobID: String,
-    jobApplicationDate: Date.now(),
+    jobApplicationDate: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
     timestamps: true,
