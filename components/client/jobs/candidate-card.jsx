@@ -21,30 +21,30 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { useState } from "react";
-import { createJobApplicationAction } from "@/actions";
+import { createJobApplicationAction } from "@/actions/application";
 
 const CandidateJobCard = ({ jobItem, jobApplications, profileInfo }) => {
   const [showJobDetails, setShowJobDetails] = useState(false);
 
-  //   console.log(profileInfo);
+  console.log(profileInfo, "Profile");
 
   async function handleJobApplication() {
     await createJobApplicationAction(
       {
         recruiterUserID: jobItem?.recruiterId,
-        name: profileInfo?.candidateInfo?.name,
-        email: profileInfo?.candidateInfo?.email,
+        name: profileInfo?.candidateName,
+        email: profileInfo?.email,
         candidateUserID: profileInfo?.userId,
-        status: ["Applied"],
-        jobID: jobItem?._id,
-        jobApplicationDate: new Date().toLocaleDateString(),
+        status: "Applied", // Status should be a string, not an array
+        jobID: jobItem?.id,
+        jobApplicationDate: new Date().toISOString(),
       },
       "/dashboard/jobs"
     );
     setShowJobDetails(false);
   }
 
-  console.log(jobApplications.length, "jobApplications");
+  console.log(jobApplications, "jobApplications");
 
   return (
     <Drawer open={showJobDetails} onOpenChange={setShowJobDetails}>
@@ -94,14 +94,14 @@ const CandidateJobCard = ({ jobItem, jobApplications, profileInfo }) => {
                 onClick={handleJobApplication}
                 disabled={
                   jobApplications.findIndex(
-                    (item) => item.jobID === jobItem?._id
+                    (item) => item.jobID === jobItem?.id
                   ) > -1
                     ? true
                     : false
                 }
               >
                 {jobApplications.findIndex(
-                  (item) => item.jobID === jobItem?._id
+                  (item) => item.jobID === jobItem?.id
                 ) > -1
                   ? "Applied"
                   : "Apply"}

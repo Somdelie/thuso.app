@@ -6,6 +6,8 @@ import RecruiterJobCard from "./RecruiterJobCard";
 import CandidateJobCard from "./candidate-card";
 
 const JobListing = ({ user, profileInfo, jobList, jobApplications }) => {
+  console.log(jobApplications);
+
   return (
     <div>
       <div className="mx-auto max-w-7xl">
@@ -16,7 +18,7 @@ const JobListing = ({ user, profileInfo, jobList, jobApplications }) => {
               : "Jobs Dashboard"}
           </h1>
           <div className="flex items-center">
-            {profileInfo?.role === "candidate" ? (
+            {profileInfo?.role === "CANDIDATE" ? (
               <p>Filter</p>
             ) : (
               <PostNewJob profileInfo={profileInfo} user={user} />
@@ -31,7 +33,7 @@ const JobListing = ({ user, profileInfo, jobList, jobApplications }) => {
                   <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
                     {jobList && jobList.length > 0 ? (
                       jobList?.map((jobItem, i) =>
-                        profileInfo?.role === "candidate" ? (
+                        profileInfo?.role === "CANDIDATE" ? (
                           <CandidateJobCard
                             key={i}
                             jobItem={jobItem}

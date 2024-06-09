@@ -1,5 +1,5 @@
 "use client";
-import { createProfile } from "@/actions";
+import { createProfile } from "@/actions/create-profile";
 import Form from "@/components/common/Form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -82,19 +82,18 @@ const Onboard = () => {
       currentTab === "candidate"
         ? {
             candidateInfo: candidateFormData,
-            role: "candidate",
+            role: "CANDIDATE",
             isPremiumUser: false,
             userId: user?.id,
             email: user?.primaryEmailAddress?.emailAddress,
           }
         : {
             recruiterInfo: recruiterFormData,
-            role: "recruiter",
+            role: "RECRUITER",
             isPremiumUser: false,
             userId: user?.id,
             email: user?.primaryEmailAddress?.emailAddress,
           };
-
     await createProfile(data, "/onboard");
   };
 

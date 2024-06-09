@@ -1,7 +1,7 @@
-import { fetchProfile } from "@/actions";
 import Onboard from "@/components/client/on-board/Onboard";
 import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs/server";
+import { fetchProfile } from "@/actions/create-profile";
 
 const OnBoardPage = async () => {
   //get the auth user from clerk
@@ -11,8 +11,10 @@ const OnBoardPage = async () => {
 
   const profileInfo = await fetchProfile(user?.id);
 
-  if (profileInfo?._id) {
-    if (profileInfo?.role === "recruiter" && !profileInfo.isPremiumUser)
+  // console.log(profileInfo?.role);
+
+  if (profileInfo?.id) {
+    if (profileInfo?.role === "RECRUITER" && !profileInfo.isPremiumUser)
       redirect("/membership");
     else redirect("/");
   } else return <Onboard />;

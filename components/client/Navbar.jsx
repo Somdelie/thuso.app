@@ -29,7 +29,7 @@ const Navbar = ({ user, profileInfo }) => {
     {
       Label: "Activity",
       path: "/activity",
-      show: profileInfo?.role !== "candidate",
+      show: profileInfo?.role === "CANDIDATE",
     },
     {
       Label: "Membership",

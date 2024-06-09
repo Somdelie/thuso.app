@@ -1,9 +1,8 @@
 import React from "react";
 
 const ActivityCard = ({ finalFilteredItem }) => {
-  console.log(finalFilteredItem);
   return (
-    <div class="card8 shadow bg-white border">
+    <div className="card8 shadow bg-white border">
       <p className="card__title">
         {finalFilteredItem?.title?.substring(0, 25)}...
       </p>

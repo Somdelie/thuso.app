@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { updateJobApplication } from "@/actions";
+import { updateJobApplicationStatus } from "@/actions/application";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -30,9 +31,9 @@ const CandidateModal = ({
   const handlePreviewResume = () => {
     const { data } = supabaseClient.storage
       .from("thuso-com")
-      .getPublicUrl(currentCandidateDetails?.candidateInfo?.resume);
+      .getPublicUrl(currentCandidateDetails?.resume);
 
-    // console.log(data, "resume");
+    console.log(data, "resume");
     const a = document.createElement("a");
     a.href = data?.publicUrl;
     a.setAttribute("download", "Resume.pdf");
@@ -42,22 +43,29 @@ const CandidateModal = ({
     document.body.removeChild(a);
   };
 
-  const handleUpdateJobStatus = async (getCurrentStatus) => {
-    let cpyJobApplicants = [...jobApplications];
-    const indexOfCurrentJobApplicant = cpyJobApplicants.findIndex(
+  const handleUpdateJobStatus = async (status) => {
+    const applicationId = jobApplications.find(
       (item) => item.candidateUserID === currentCandidateDetails?.userId
-    );
-    const jobApplicantsToUpdate = {
-      ...cpyJobApplicants[indexOfCurrentJobApplicant],
-      status:
-        cpyJobApplicants[indexOfCurrentJobApplicant].status.concat(
-          getCurrentStatus
-        ),
-    };
-    await updateJobApplication(jobApplicantsToUpdate, "/dashboard/jobs");
+    )?.id;
+
+    if (applicationId) {
+      await updateJobApplicationStatus(
+        applicationId,
+        status,
+        "/dashboard/jobs"
+      );
+      setShowCurrentCandidateDetailsModal(false); // Close the modal after updating the status
+    }
   };
 
-  console.log(jobApplications);
+  const currentApplication = jobApplications.find(
+    (item) => item.candidateUserID === currentCandidateDetails?.userId
+  );
+
+  const isSelected = currentApplication?.status.includes("selected");
+  const isRejected = currentApplication?.status.includes("rejected");
+
+  // console.log(jobApplications);
 
   return (
     <Dialog
@@ -76,7 +84,7 @@ const CandidateModal = ({
           <DialogDescription>
             Here are details about{" "}
             <span className="font-semibold">
-              {currentCandidateDetails?.candidateInfo?.name}
+              {currentCandidateDetails?.candidateName}
             </span>
           </DialogDescription>
         </DialogHeader>
@@ -85,7 +93,7 @@ const CandidateModal = ({
             <h1>
               Name:{" "}
               <span className="font-semibold">
-                {currentCandidateDetails?.candidateInfo?.name}
+                {currentCandidateDetails?.candidateName}
               </span>
             </h1>
           </div>
@@ -99,21 +107,21 @@ const CandidateModal = ({
             {" "}
             Company:{" "}
             <span className="font-semibold">
-              {currentCandidateDetails?.candidateInfo?.currentCompany}
+              {currentCandidateDetails?.currentCompany}
             </span>
           </p>
           <p>
             {" "}
             Total Experience:{" "}
             <span className="font-semibold">
-              {currentCandidateDetails?.candidateInfo?.totalExperience} Years
+              {currentCandidateDetails?.totalExperience} Years
             </span>
           </p>
           <p>
             {" "}
             Salary:{" "}
             <span className="font-semibold">
-              $ {currentCandidateDetails?.candidateInfo?.currentSalary} / hour
+              $ {currentCandidateDetails?.currentSalary} / hour
             </span>
           </p>
         </div>
@@ -121,60 +129,16 @@ const CandidateModal = ({
           <Button onClick={handlePreviewResume}>Resume</Button>
           <Button
             onClick={() => handleUpdateJobStatus("selected")}
-            disabled={
-              jobApplications
-                .find(
-                  (item) =>
-                    item.candidateUserID === currentCandidateDetails?.userId
-                )
-                ?.status.includes("selected") ||
-              jobApplications
-                .find(
-                  (item) =>
-                    item.candidateUserID === currentCandidateDetails?.userId
-                )
-                ?.status.includes("rejected")
-                ? true
-                : false
-            }
+            disabled={isSelected || isRejected}
           >
-            {jobApplications
-              .find(
-                (item) =>
-                  item.candidateUserID === currentCandidateDetails?.userId
-              )
-              ?.status.includes("selected")
-              ? "Selected"
-              : "Select"}
+            {isSelected ? "Selected" : "Select"}
           </Button>
           <Button
-            disabled={
-              jobApplications
-                .find(
-                  (item) =>
-                    item.candidateUserID === currentCandidateDetails?.userId
-                )
-                ?.status.includes("selected") ||
-              jobApplications
-                .find(
-                  (item) =>
-                    item.candidateUserID === currentCandidateDetails?.userId
-                )
-                ?.status.includes("rejected")
-                ? true
-                : false
-            }
             onClick={() => handleUpdateJobStatus("rejected")}
             className="bg-red-600 text-white"
+            disabled={isSelected || isRejected}
           >
-            {jobApplications
-              .find(
-                (item) =>
-                  item.candidateUserID === currentCandidateDetails?.userId
-              )
-              ?.status.includes("rejected")
-              ? "Rejected"
-              : "Reject"}
+            {isRejected ? "Rejected" : "Reject"}
           </Button>
         </DialogFooter>
       </DialogContent>

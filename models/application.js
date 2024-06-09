@@ -6,7 +6,7 @@ const ApplicationSchema = new mongoose.Schema(
     name: String,
     email: String,
     candidateUserID: String,
-    status: [Array],
+    status: String,
     jobID: String,
     jobApplicationDate: {
       type: Date,

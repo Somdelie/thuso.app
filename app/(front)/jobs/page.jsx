@@ -1,6 +1,7 @@
 import {
   fetchJobApplicationsForCaRecruiter,
   fetchJobApplicationsForCandidate,
+  fetchJobApplicationsForRecruiter,
   fetchJobsForCandidateAction,
   fetchProfile,
 } from "@/actions";
@@ -15,7 +16,7 @@ const JobsPage = async () => {
   const getJobApplicationList =
     profileInfo?.role === "candidate"
       ? await fetchJobApplicationsForCandidate(user?.id)
-      : await fetchJobApplicationsForCaRecruiter(user?.id);
+      : await fetchJobApplicationsForRecruiter(user?.id);
 
   return (
     <div className="mx-auto max-w-7xl">

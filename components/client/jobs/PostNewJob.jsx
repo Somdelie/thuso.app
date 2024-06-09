@@ -1,5 +1,5 @@
 "use client";
-import { postNewJobAction } from "@/actions";
+import { postNewJobAction } from "@/actions/create-job";
 import Form from "@/components/common/Form";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,8 +17,10 @@ const PostNewJob = ({ profileInfo, user }) => {
   const [showJobDialog, setShowJobDialog] = useState();
   const [jobFormData, setJobFormData] = useState({
     ...initialPostNewJobFormData,
-    companyName: profileInfo?.recruiterInfo?.companyName,
+    companyName: profileInfo?.recruiterCompanyName,
   });
+
+  // console.log(profileInfo?.recruiterInfo);
 
   const isEmptyValues = () => {
     return Object.keys(jobFormData).every(
@@ -31,13 +33,12 @@ const PostNewJob = ({ profileInfo, user }) => {
       {
         ...jobFormData,
         recruiterId: user?.id,
-        applicants: [],
       },
       "/jobs"
     );
     setJobFormData({
       ...initialPostNewJobFormData,
-      companyName: profileInfo?.recruiterInfo?.companyName,
+      companyName: profileInfo?.recruiterCompanyName,
     });
     setShowJobDialog(false);
   };

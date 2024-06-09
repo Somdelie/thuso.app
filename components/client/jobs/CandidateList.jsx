@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { DialogContent } from "@radix-ui/react-dialog";
 import React, { Fragment } from "react";
 import CandidateModal from "./candidate-modal";
-import { getCandidateDetailsByIDAction } from "@/actions";
+import { getCandidateDetailsByID } from "@/actions/candidateActions";
 
 const CandidateList = ({
   currentCandidateDetails,
@@ -23,9 +23,9 @@ const CandidateList = ({
   setShowCurrentCandidateDetailsModal,
 }) => {
   async function handleFetchCandidateDetails(getCurrentCandidateId) {
-    const data = await getCandidateDetailsByIDAction(getCurrentCandidateId);
+    const data = await getCandidateDetailsByID(getCurrentCandidateId);
 
-    // console.log(data);
+    console.log(data);
 
     if (data) {
       setCurrentCandidateDetails(data);
