@@ -15,7 +15,7 @@ export default async function ClientLayout({ children }) {
         user={JSON.parse(JSON.stringify(user))}
         profileInfo={profileInfo}
       />
-      {children}
+      <main className="py-4">{children}</main>
     </div>
   );
 }

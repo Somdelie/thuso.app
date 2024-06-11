@@ -9,12 +9,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { useState } from "react";
 
 export function MegaMenu() {
+  const [showMegaMenu, setShowMegaMenu] = useState(false);
+
   return (
-    <DropdownMenu>
+    <DropdownMenu open={showMegaMenu} onOpenChange={setShowMegaMenu}>
       <DropdownMenuTrigger asChild>
-        <span className="group hover:text-main transition cursor-pointer inline-flex h-9 w-max items-center rounded-md px-2 py-2 text-sm font-medium">
+        <span className="group px-4 w-full hover:text-white hover:bg-sky-600 md:hover:bg-transparent text-lg md:hover:text-main transition cursor-pointer inline-flex h-9 md:w-max items-center rounded-md md:px-2 py-2 md:text-sm font-medium">
           Browse
         </span>
       </DropdownMenuTrigger>
@@ -24,10 +27,10 @@ export function MegaMenu() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setShowMegaMenu(false)}>
           <Link href="/candidates">Candidates</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setShowMegaMenu(false)}>
           <Link href="/jobs">Jobs</Link>
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -1,42 +1,46 @@
 import {
-  fetchJobApplicationsForCaRecruiter,
   fetchJobApplicationsForCandidate,
   fetchJobApplicationsForRecruiter,
+} from "@/actions/application";
+import {
   fetchJobsForCandidateAction,
-  fetchProfile,
-} from "@/actions";
-import CandidateJobCard from "@/components/client/jobs/CandidateJobCard";
+  fetchJobsForRecruiterAction,
+} from "@/actions/create-job";
+import { fetchProfile } from "@/actions/create-profile";
+import JobListing from "@/components/client/jobs/JobListing";
 import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import React from "react";
 
-const JobsPage = async () => {
+const JobPage = async () => {
   const user = await currentUser();
   const profileInfo = await fetchProfile(user?.id);
-  const jobList = await fetchJobsForCandidateAction();
+
+  const jobList =
+    profileInfo?.role === "CANDIDATE"
+      ? await fetchJobsForCandidateAction(user?.id)
+      : await fetchJobsForRecruiterAction(user?.id);
+
+  // console.log(jobList);
 
   const getJobApplicationList =
-    profileInfo?.role === "candidate"
+    profileInfo?.role === "CANDIDATE"
       ? await fetchJobApplicationsForCandidate(user?.id)
       : await fetchJobApplicationsForRecruiter(user?.id);
 
+  const fetchFilterCategories = await fetchJobsForCandidateAction();
+
+  if (!user) redirect("/sign-in");
+  if (user && !profileInfo) redirect("/onboard");
+
   return (
-    <div className="mx-auto max-w-7xl">
-      <div className="flex items-baseline justify-between border-b border-gray-200 pb-6">
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900">
-          Explore All Jobs
-        </h1>
-      </div>
-      <div className="grid grid-cols-1 pt-8 md:grid-cols-3 gap-4">
-        {jobList?.map((job, i) => (
-          <CandidateJobCard
-            key={i}
-            job={job}
-            profileInfo={profileInfo}
-            jobApplications={getJobApplicationList}
-          />
-        ))}
-      </div>
-    </div>
+    <JobListing
+      user={JSON.parse(JSON.stringify(user))}
+      profileInfo={profileInfo}
+      jobList={jobList}
+      jobApplications={getJobApplicationList}
+    />
   );
 };
 
-export default JobsPage;
+export default JobPage;

@@ -4,16 +4,33 @@ import React from "react";
 import PostNewJob from "./PostNewJob";
 import RecruiterJobCard from "./RecruiterJobCard";
 import CandidateJobCard from "./candidate-card";
+import { filterMenuDataArray } from "@/utils";
 
-const JobListing = ({ user, profileInfo, jobList, jobApplications }) => {
-  console.log(jobApplications);
+const JobListing = ({
+  user,
+  profileInfo,
+  jobList,
+  jobApplications,
+  filterCategories,
+}) => {
+  // console.log(jobApplications);
+
+  // const filterMenus = filterMenuDataArray.map((item) => ({
+  //   id: item.id,
+  //   name: item.label,
+  //   options: [
+  //     ...new Set(filterCategories?.map((listItem) => listItem[item.id])),
+  //   ],
+  // }));
+
+  // console.log(filterMenus, "Filter Menu");
 
   return (
     <div>
       <div className="mx-auto max-w-7xl">
         <div className="flex items-baseline justify-between border-b border-gray-200 pb-6">
           <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-gray-900">
-            {profileInfo?.role === "candidate"
+            {profileInfo?.role === "CANDIDATE"
               ? "Explore All Jobs"
               : "Jobs Dashboard"}
           </h1>

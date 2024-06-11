@@ -1,20 +1,22 @@
 "use server";
 import prismaDB from "@/utils/dbConnect";
-
 import { revalidatePath } from "next/cache";
 
+// Create a new job application
 export async function createJobApplicationAction(formData, pathToRevalidate) {
   const applicationData = {
     ...formData,
   };
+
   const application = await prismaDB.application.create({
     data: applicationData,
   });
+
   revalidatePath(pathToRevalidate);
   return application;
 }
 
-// update application status
+// Update application status
 export async function updateJobApplicationStatus(
   applicationId,
   status,
@@ -24,26 +26,39 @@ export async function updateJobApplicationStatus(
     where: { id: applicationId },
     data: { status },
   });
+
   revalidatePath(pathToRevalidate);
-  // console.log(updatedApplication);
   return updatedApplication;
 }
 
+// Fetch job applications for a candidate
 export async function fetchJobApplicationsForCandidate(id) {
   const result = await prismaDB.application.findMany({
     where: { candidateUserID: id },
+    include: { job: true },
   });
 
-  // console.log(result);
   return result;
 }
 
+// Fetch job applications for a recruiter
 export async function fetchJobApplicationsForRecruiter(id) {
   const result = await prismaDB.application.findMany({
     where: { recruiterUserID: id },
+    include: { job: true },
   });
 
-  // console.log(result);
+  return result;
+}
+
+// Fetch applications for a candidate with job details
+export async function fetchApplicationsForCandidate(candidateId) {
+  const result = await prismaDB.application.findMany({
+    where: { candidateUserID: candidateId },
+    include: {
+      job: true, // Include the job details
+    },
+  });
 
   return result;
 }

@@ -2,19 +2,19 @@
 export const recruiterOnboardFormControls = [
   {
     label: "Name",
-    name: "name",
+    name: "recruiterName",
     placeholder: "Enter Your name",
     componentType: "input",
   },
   {
     label: "Company Name",
-    name: "companyName",
+    name: "recruiterCompanyName",
     placeholder: "Enter Your company name",
     componentType: "input",
   },
   {
     label: "Company Role",
-    name: "companyRole",
+    name: "recruiterCompanyRole",
     placeholder: "Enter Your company role",
     componentType: "input",
   },
@@ -42,7 +42,7 @@ export const candidateOnboardFormControls = [
   },
   {
     label: "Name",
-    name: "name",
+    name: "candidateName",
     placeholder: "Enter Your name",
     componentType: "input",
   },
@@ -83,12 +83,6 @@ export const candidateOnboardFormControls = [
     componentType: "input",
   },
   {
-    label: "Previous Companies",
-    name: "previousCompanies",
-    placeholder: "Enter Your Previous Companies",
-    componentType: "input",
-  },
-  {
     label: "Total Experience",
     name: "totalExperience",
     placeholder: "Enter Your Total Experience",
@@ -118,6 +112,21 @@ export const candidateOnboardFormControls = [
 export const initialCandidateFormData = {
   documentPhoto: "",
   resume: "",
+  name: "",
+  currentCompany: "",
+  currentJobLocation: "",
+  preferredJobLocation: "",
+  currentSalary: "",
+  noticePeriod: "",
+  skills: "",
+  totalExperience: "",
+  collegeLocation: "",
+  graduatedYear: "",
+  linkedinProfile: "",
+};
+
+// default initial candidate Recruiter Form Data
+export const initialCandidateAccountFormData = {
   name: "",
   currentCompany: "",
   currentJobLocation: "",
@@ -196,3 +205,97 @@ export const initialPostNewJobFormData = {
   description: "",
   skills: "",
 };
+
+export const filterMenuDataArray = [
+  {
+    id: "CompanyName",
+    label: "Company Name",
+  },
+  {
+    id: "Title",
+    label: "Title",
+  },
+  {
+    id: "type",
+    label: "Job Type",
+  },
+  {
+    id: "location",
+    label: "Location",
+  },
+];
+
+export const membershipPlans = [
+  {
+    heading: "Basic",
+    price: 100,
+    desc: "This plan is for those who have a team already and running a large business.",
+    type: "Basic",
+    benefits: [
+      {
+        before: 20,
+        list: "team members",
+      },
+      {
+        list: "Plan",
+        after: "team meetings",
+      },
+      {
+        list: "File sharing",
+      },
+    ],
+  },
+  {
+    heading: "Gold",
+    price: 200,
+    desc: "This plan is for those who have a team already and running a large business.",
+    type: "Gold",
+    benefits: [
+      {
+        before: 20,
+        list: "team members",
+      },
+      {
+        list: "Plan",
+        after: "team meetings",
+      },
+      {
+        list: "File sharing",
+      },
+    ],
+  },
+  {
+    heading: "Premium",
+    price: 300,
+    desc: "This plan is for those who have a team already and running a large business.",
+    type: "Premium",
+    benefits: [
+      {
+        before: 20,
+        list: "team members",
+      },
+      {
+        list: "Plan",
+        after: "team meetings",
+      },
+      {
+        list: "File sharing",
+      },
+      {
+        list: "Access to ",
+        after: "GreenHub",
+      },
+      {
+        list: "Call Support ",
+      },
+      {
+        before: "Priority",
+        list: "Support",
+      },
+      {
+        before: "One on One",
+        list: "Meeting",
+      },
+    ],
+  },
+];

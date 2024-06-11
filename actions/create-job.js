@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 export async function postNewJobAction(formData, pathToRevalidate) {
   const jobData = {
     ...formData,
-    applicants: {
+    applications: {
       create: [],
     },
   };
@@ -25,7 +25,7 @@ export async function fetchJobsForRecruiterAction(id) {
     where: {
       recruiterId: id,
     },
-    include: { applicants: true },
+    include: { applications: true },
   });
 
   return result;

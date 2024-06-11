@@ -1,7 +1,7 @@
 "use server";
 import prismaDB from "@/utils/dbConnect";
 import { revalidatePath } from "next/cache";
-// Create a new profile
+
 // Create a new profile
 export async function createProfile(data, pathToRevalidate) {
   const { recruiterInfo, candidateInfo, ...rest } = data;
@@ -47,10 +47,14 @@ export async function fetchProfile(userId) {
 }
 
 // Update a profile
-export async function updateProfile(userId, data) {
+export async function updateProfile(userId, data, pathToRevalidate) {
   const profile = await prismaDB.profile.update({
-    where: { userId },
+    where: { id: userId },
     data,
   });
+
+  // console.log(profile);
+
+  revalidatePath(pathToRevalidate);
   return profile;
 }

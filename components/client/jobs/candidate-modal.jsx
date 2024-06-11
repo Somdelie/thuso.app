@@ -62,8 +62,8 @@ const CandidateModal = ({
     (item) => item.candidateUserID === currentCandidateDetails?.userId
   );
 
-  const isSelected = currentApplication?.status.includes("selected");
-  const isRejected = currentApplication?.status.includes("rejected");
+  const isSelected = currentApplication?.status.includes("Selected");
+  const isRejected = currentApplication?.status.includes("Rejected");
 
   // console.log(jobApplications);
 
@@ -128,15 +128,15 @@ const CandidateModal = ({
         <DialogFooter>
           <Button onClick={handlePreviewResume}>Resume</Button>
           <Button
-            onClick={() => handleUpdateJobStatus("selected")}
+            onClick={() => handleUpdateJobStatus("Selected")}
             disabled={isSelected || isRejected}
           >
             {isSelected ? "Selected" : "Select"}
           </Button>
           <Button
-            onClick={() => handleUpdateJobStatus("rejected")}
+            onClick={() => handleUpdateJobStatus("Rejected")}
             className="bg-red-600 text-white"
-            disabled={isSelected || isRejected}
+            disabled={isRejected}
           >
             {isRejected ? "Rejected" : "Reject"}
           </Button>
