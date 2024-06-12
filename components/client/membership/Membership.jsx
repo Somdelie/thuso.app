@@ -15,7 +15,7 @@ const Membership = ({ profileInfo }) => {
         <div className="container mx-auto p-0 space-y-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-4">
             {membershipPlans?.map((plan, i) => (
-              <MembershipCard key={i} plan={plan} />
+              <MembershipCard key={i} plan={plan} profileInfo={profileInfo} />
             ))}
           </div>
         </div>

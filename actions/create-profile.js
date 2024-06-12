@@ -53,8 +53,43 @@ export async function updateProfile(userId, data, pathToRevalidate) {
     data,
   });
 
-  // console.log(profile);
+  console.log("Profile updated:", profile);
 
   revalidatePath(pathToRevalidate);
   return profile;
 }
+
+// Update a profile
+export async function updatedProfile(userId, data, pathToRevalidate) {
+  const profile = await prismaDB.profile.update({
+    where: { id: userId },
+    data: {
+      stripeCustomerId: customer.id,
+      stripeSubscriptionId: subscription.id,
+      isPremiumUser: true,
+      memberShipType: planId,
+      memberShipStartDate: new Date(),
+    },
+  });
+
+  console.log("Profile updated:", profile);
+
+  revalidatePath(pathToRevalidate);
+  return profile;
+}
+
+// // Update profile in the database
+//  export async function profileUpdate(userId, data, pathToRevalidate) {
+//     const updatedProfile = await prismaDB.profile.update({
+//       where: { id: userId },
+//       data: {
+//         stripeCustomerId: customer.id,
+//         stripeSubscriptionId: subscription.id,
+//         isPremiumUser: true,
+//         memberShipType: planId,
+//         memberShipStartDate: new Date(),
+//       },
+//     });
+//     console.log(updateProfile)
+//     return updateProfile
+//  }

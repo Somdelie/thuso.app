@@ -45,6 +45,9 @@ model Profile {
   memberShipStartDate DateTime?
   memberShipEndDate   DateTime?
 
+  stripeCustomerId     String? // Add this field
+  stripeSubscriptionId String? // Add this field
+
   // Recruiter specific fields
   recruiterName        String?
   recruiterCompanyName String?
