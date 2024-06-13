@@ -4,7 +4,6 @@ import { updateProfile } from "@/actions/create-profile";
 import Form from "@/components/common/Form";
 import {
   candidateOnboardFormControls,
-  initialCandidateAccountFormData,
   initialCandidateFormData,
   initialRecruiterFormData,
   recruiterOnboardFormControls,
@@ -13,7 +12,7 @@ import { useEffect, useState } from "react";
 
 const AccountInfo = ({ profileInfo }) => {
   const [candidateFormData, setCandidateFormData] = useState(
-    initialCandidateAccountFormData
+    initialCandidateFormData
   );
   const [recruiterFormData, setRecruiterFormData] = useState(
     initialRecruiterFormData
