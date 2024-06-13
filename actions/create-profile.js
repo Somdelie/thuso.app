@@ -10,8 +10,6 @@ export async function createProfile(data, pathToRevalidate) {
   const profileData = {
     ...rest,
     recruiterName: recruiterInfo?.name,
-    recruiterCompanyName: recruiterInfo?.companyName,
-    recruiterCompanyRole: recruiterInfo?.companyRole,
     documentPhoto: candidateInfo?.documentPhoto,
     resume: candidateInfo?.resume,
     candidateName: candidateInfo?.name,

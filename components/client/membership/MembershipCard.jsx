@@ -4,6 +4,7 @@ import {
   createPriceIdAction,
   createStripePaymentAction,
 } from "@/actions/payment";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -11,8 +12,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
 import { loadStripe } from "@stripe/stripe-js";
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IoCheckmarkCircleSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
@@ -34,6 +36,49 @@ const MembershipCard = ({ plan, profileInfo }) => {
         return "platinum-button";
       default:
         return "default-button";
+    }
+  };
+
+  const isButtonDisabled = (planType) => {
+    switch (profileInfo?.memberShipType) {
+      case "Basic":
+        return planType === "Basic";
+      case "Gold":
+        return planType === "Basic" || planType === "Gold";
+      case "Premium":
+        return true;
+      default:
+        return false;
+    }
+  };
+
+  const getButtonText = (planType) => {
+    switch (profileInfo?.memberShipType) {
+      case "Basic":
+        return planType === "Basic"
+          ? `Get ${planType}`
+          : `Upgrade to ${planType}`;
+      case "Gold":
+        return planType === "Gold"
+          ? `Get ${planType}`
+          : `Upgrade to ${planType}`;
+      case "Premium":
+        return `Get ${planType}`;
+      default:
+        return `Get ${planType}`;
+    }
+  };
+
+  const shouldHideButton = (planType) => {
+    switch (profileInfo?.memberShipType) {
+      case "Basic":
+        return planType === "Basic";
+      case "Gold":
+        return planType === "Basic" || planType === "Gold";
+      case "Premium":
+        return true;
+      default:
+        return false;
     }
   };
 
@@ -66,12 +111,11 @@ const MembershipCard = ({ plan, profileInfo }) => {
       sessionStorage.getItem("currentPlan")
     );
 
-    // Calculate membership end date based on current date and membership type
     const membershipEndDate = new Date();
     membershipEndDate.setMonth(
-      membershipEndDate.getMonth() + // Add months
+      membershipEndDate.getMonth() +
         (fetchCurrentPlanFromSessionStorage?.type === "Basic"
-          ? 1 // Adjust the number of months based on membership type
+          ? 1
           : fetchCurrentPlanFromSessionStorage?.type === "Gold"
           ? 2
           : 5)
@@ -83,31 +127,29 @@ const MembershipCard = ({ plan, profileInfo }) => {
         isPremiumUser: true,
         memberShipType: fetchCurrentPlanFromSessionStorage?.type,
         memberShipStartDate: new Date().toISOString(),
-        memberShipEndDate: membershipEndDate.toISOString(), // Use the calculated end date
+        memberShipEndDate: membershipEndDate.toISOString(),
       },
       "/membership"
     );
-    // Call updateMembership after successful payment
   }
-
+  const { toast } = useToast();
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   useEffect(() => {
     if (searchParams.get("status") === "success") {
       updateMembership();
-      toast.success("🦄 Payment Successfully!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      setPaymentSuccess(true); // Set state to indicate that membership has been updated
+
+      setPaymentSuccess(true);
+      redirect("/membership");
     }
-  }, []); // Empty dependency array ensures this effect runs only once
+  }, []);
+
+  if (paymentSuccess === true) {
+    return toast({
+      title: "Your now a premium user",
+      description: "well done",
+    });
+  }
 
   console.log(profileInfo, "Member Updated");
 
@@ -141,15 +183,17 @@ const MembershipCard = ({ plan, profileInfo }) => {
             ))}
           </div>
         </CardContent>
-        <CardFooter className="h-[15%] w-full">
-          <button
-            onClick={() => handlePayment(plan)}
-            role="button"
-            className={`${getButtonClass(plan?.type)} w-full font-semibold`}
-          >
-            <span className="button-text">Get {plan?.type}</span>
-          </button>
-        </CardFooter>
+        {!shouldHideButton(plan?.type) && (
+          <CardFooter className="h-[15%] w-full">
+            <Button
+              onClick={() => handlePayment(plan)}
+              className={`${getButtonClass(plan?.type)} w-full font-semibold`}
+              disabled={isButtonDisabled(plan?.type)}
+            >
+              <span className="button-text">{getButtonText(plan?.type)}</span>
+            </Button>
+          </CardFooter>
+        )}
       </div>
     </Card>
   );

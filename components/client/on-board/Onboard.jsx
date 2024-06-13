@@ -60,14 +60,14 @@ const Onboard = () => {
     setCurrentTab(value);
   }
 
-  //   console.log(recruiterFormData);
+  // console.log(candidateFormData);
 
   const handleRecruiterFormValid = () => {
     return (
       recruiterFormData &&
-      recruiterFormData.name.trim() !== "" &&
-      recruiterFormData.companyName.trim() !== "" &&
-      recruiterFormData.companyRole.trim() !== ""
+      recruiterFormData.recruiterName.trim() !== "" &&
+      recruiterFormData.companyRole.trim() !== "" &&
+      recruiterFormData.companyName.trim() !== ""
     );
   };
 

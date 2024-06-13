@@ -8,21 +8,21 @@ export const recruiterOnboardFormControls = [
   },
   {
     label: "Company Name",
-    name: "recruiterCompanyName",
-    placeholder: "Enter Your company name",
+    name: "companyName",
+    placeholder: "Enter Your Company Name",
     componentType: "input",
   },
   {
     label: "Company Role",
-    name: "recruiterCompanyRole",
-    placeholder: "Enter Your company role",
+    name: "companyRole",
+    placeholder: "Enter Your Company Role",
     componentType: "input",
   },
 ];
 
 // default initial Recruiter Form Data
 export const initialRecruiterFormData = {
-  name: "",
+  recruiterName: "",
   companyName: "",
   companyRole: "",
 };
@@ -112,22 +112,6 @@ export const candidateOnboardFormControls = [
 export const initialCandidateFormData = {
   documentPhoto: "",
   resume: "",
-  name: "",
-  currentCompany: "",
-  currentJobLocation: "",
-  preferredJobLocation: "",
-  currentSalary: "",
-  noticePeriod: "",
-  skills: "",
-  totalExperience: "",
-  collegeLocation: "",
-  graduatedYear: "",
-  linkedinProfile: "",
-};
-
-// default initial candidate Recruiter Form Data
-export const initialCandidateAccountFormData = {
-  name: "",
   currentCompany: "",
   currentJobLocation: "",
   preferredJobLocation: "",
