@@ -3,17 +3,16 @@ import prismaDB from "@/utils/dbConnect";
 import { revalidatePath } from "next/cache";
 
 // Create a new profile
+// Create a new profile
 export async function createProfile(data, pathToRevalidate) {
   const { recruiterInfo, candidateInfo, ...rest } = data;
 
   // Flatten and map the fields according to the Prisma schema
   const profileData = {
     ...rest,
-    recruiterName: recruiterInfo?.name,
+    fullName: recruiterInfo?.fullName || candidateInfo?.fullName,
     documentPhoto: candidateInfo?.documentPhoto,
     resume: candidateInfo?.resume,
-    candidateName: candidateInfo?.name,
-    currentCompany: candidateInfo?.currentCompany,
     currentJobLocation: candidateInfo?.currentJobLocation,
     preferredJobLocation: candidateInfo?.preferredJobLocation,
     currentSalary: candidateInfo?.currentSalary,
@@ -25,13 +24,12 @@ export async function createProfile(data, pathToRevalidate) {
     linkedinProfile: candidateInfo?.linkedinProfile,
     isCandidatePremium: candidateInfo?.isCandidatePremium,
   };
-
+  console.log(profileData);
   const profile = await prismaDB.profile.create({
     data: profileData,
   });
   revalidatePath(pathToRevalidate);
 
-  // console.log(profileData);
   return profile;
 }
 
@@ -75,19 +73,3 @@ export async function updatedProfile(userId, data, pathToRevalidate) {
   revalidatePath(pathToRevalidate);
   return profile;
 }
-
-// // Update profile in the database
-//  export async function profileUpdate(userId, data, pathToRevalidate) {
-//     const updatedProfile = await prismaDB.profile.update({
-//       where: { id: userId },
-//       data: {
-//         stripeCustomerId: customer.id,
-//         stripeSubscriptionId: subscription.id,
-//         isPremiumUser: true,
-//         memberShipType: planId,
-//         memberShipStartDate: new Date(),
-//       },
-//     });
-//     console.log(updateProfile)
-//     return updateProfile
-//  }

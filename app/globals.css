@@ -537,7 +537,7 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
   
-  .shadow {
+  .shadows {
     position: absolute;
     top: 0;
     left: 0;

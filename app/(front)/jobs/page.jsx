@@ -21,7 +21,7 @@ const JobPage = async () => {
       ? await fetchJobsForCandidateAction(user?.id)
       : await fetchJobsForRecruiterAction(user?.id);
 
-  // console.log(jobList);
+  console.log(profileInfo, "This is profile info");
 
   const getJobApplicationList =
     profileInfo?.role === "CANDIDATE"

@@ -49,11 +49,7 @@ const CandidateModal = ({
     )?.id;
 
     if (applicationId) {
-      await updateJobApplicationStatus(
-        applicationId,
-        status,
-        "/dashboard/jobs"
-      );
+      await updateJobApplicationStatus(applicationId, status, "/jobs");
       setShowCurrentCandidateDetailsModal(false); // Close the modal after updating the status
     }
   };
@@ -65,7 +61,7 @@ const CandidateModal = ({
   const isSelected = currentApplication?.status.includes("Selected");
   const isRejected = currentApplication?.status.includes("Rejected");
 
-  // console.log(jobApplications);
+  // console.log(jobApplications, "Job applications");
 
   return (
     <Dialog
@@ -75,16 +71,13 @@ const CandidateModal = ({
         setShowCurrentCandidateDetailsModal(false);
       }}
     >
-      {/* <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
-      </DialogTrigger> */}
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle></DialogTitle>
           <DialogDescription>
             Here are details about{" "}
             <span className="font-semibold">
-              {currentCandidateDetails?.candidateName}
+              {currentCandidateDetails?.fullName}
             </span>
           </DialogDescription>
         </DialogHeader>
@@ -93,7 +86,7 @@ const CandidateModal = ({
             <h1>
               Name:{" "}
               <span className="font-semibold">
-                {currentCandidateDetails?.candidateName}
+                {currentCandidateDetails?.fullName}
               </span>
             </h1>
           </div>
@@ -107,23 +100,23 @@ const CandidateModal = ({
             {" "}
             Company:{" "}
             <span className="font-semibold">
-              {currentCandidateDetails?.currentCompany}
+              {currentCandidateDetails?.companyName ? (
+                <>{currentCandidateDetails?.companyName}</>
+              ) : (
+                "Individual"
+              )}
             </span>
           </p>
-          <p>
-            {" "}
-            Total Experience:{" "}
-            <span className="font-semibold">
-              {currentCandidateDetails?.totalExperience} Years
-            </span>
-          </p>
-          <p>
-            {" "}
-            Salary:{" "}
-            <span className="font-semibold">
-              $ {currentCandidateDetails?.currentSalary} / hour
-            </span>
-          </p>
+          <div className="flex gap-2 overflow-x-auto">
+            {currentCandidateDetails?.skills?.split(",").map((skillItem, i) => (
+              <div
+                key={i}
+                className="w-[100px] flex items-center justify-center h-[35px] bg-black text-white rounded"
+              >
+                <p className="text-[13px] font-medium">{skillItem}</p>
+              </div>
+            ))}
+          </div>
         </div>
         <DialogFooter>
           <Button onClick={handlePreviewResume}>Resume</Button>

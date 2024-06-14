@@ -8,19 +8,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useToast } from "@/components/ui/use-toast";
 import { initialPostNewJobFormData, postNewJobFormControls } from "@/utils";
 import { Save } from "lucide-react";
-import { revalidatePath } from "next/cache";
 import { useState } from "react";
 
-const PostNewJob = ({ profileInfo, user }) => {
+const PostNewJob = ({ profileInfo, user, jobList }) => {
   const [showJobDialog, setShowJobDialog] = useState();
   const [jobFormData, setJobFormData] = useState({
     ...initialPostNewJobFormData,
-    companyName: profileInfo?.recruiterCompanyName,
   });
 
-  // console.log(profileInfo?.recruiterInfo);
+  const { toast } = useToast();
+
+  // console.log(jobList, "Job List");
 
   const isEmptyValues = () => {
     return Object.keys(jobFormData).every(
@@ -38,15 +39,27 @@ const PostNewJob = ({ profileInfo, user }) => {
     );
     setJobFormData({
       ...initialPostNewJobFormData,
-      companyName: profileInfo?.recruiterCompanyName,
     });
     setShowJobDialog(false);
   };
 
+  function handleAddNewJob() {
+    if (!profileInfo?.isPremiumUser && jobList.length >= 3) {
+      toast({
+        variant: "destructive",
+        title: "Please Get Membership",
+        description:
+          "You can post the max of 2 jobs unless you opt for membership",
+      });
+      return;
+    }
+    setShowJobDialog(true);
+  }
+
   return (
     <div>
       <Button
-        onClick={() => setShowJobDialog(true)}
+        onClick={handleAddNewJob}
         className="disabled:opacity-60 mt-6 flex h-11 items-center justify-center px-5"
       >
         Post A Job
@@ -57,7 +70,6 @@ const PostNewJob = ({ profileInfo, user }) => {
           setShowJobDialog(false);
           setJobFormData({
             ...initialPostNewJobFormData,
-            companyName: profileInfo?.recruiterInfo?.companyName,
           });
         }}
       >

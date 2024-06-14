@@ -22,24 +22,24 @@ import {
 } from "@/components/ui/drawer";
 import { useState } from "react";
 import { createJobApplicationAction } from "@/actions";
+
 const CandidateJobCard = ({ job, jobApplications, profileInfo }) => {
   const [showJobDetails, setShowJobDetails] = useState(false);
 
-  // console.log(jobApplications);
-
   async function handleJobApplication() {
-    await createJobApplicationAction(
-      {
-        recruiterUserID: job?.recruiterId,
-        name: profileInfo?.candidateInfo?.name,
-        email: profileInfo?.candidateInfo?.email,
-        candidateUserID: profileInfo?.userId,
-        status: ["Applied"],
-        jobID: job?.id,
-        jobApplicationDate: new Date().toLocaleDateString(),
-      },
-      "/dashboard/jobs"
-    );
+    console.log("Applying");
+    // await createJobApplicationAction(
+    //   {
+    //     recruiterUserID: job?.recruiterId,
+    //     fullName: profileInfo?.fullName, // Ensure fullName is passed here
+    //     email: profileInfo?.candidateInfo?.email,
+    //     candidateUserID: profileInfo?.userId,
+    //     status: "Applied", // Status should be a string, not an array
+    //     jobID: job?.id, // Correct the jobID to job.id
+    //     jobApplicationDate: new Date().toISOString(), // Use toISOString for proper date format
+    //   },
+    //   "/jobs"
+    // );
     setShowJobDetails(false);
   }
 

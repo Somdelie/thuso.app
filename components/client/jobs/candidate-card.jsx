@@ -22,29 +22,41 @@ import {
 } from "@/components/ui/drawer";
 import { useState } from "react";
 import { createJobApplicationAction } from "@/actions/application";
+import { useToast } from "@/components/ui/use-toast";
 
 const CandidateJobCard = ({ jobItem, jobApplications, profileInfo }) => {
   const [showJobDetails, setShowJobDetails] = useState(false);
 
-  console.log(profileInfo, "Profile");
+  const { toast } = useToast();
+  // console.log(profileInfo.fullName, "Profile");
 
   async function handleJobApplication() {
+    if (!profileInfo?.isPremiumUser && jobApplications.length >= 2) {
+      toast({
+        variant: "destructive",
+        title: "Please Get Membership",
+        description:
+          "You can apply the max of 2 jobs unless you opt for membership",
+      });
+      return;
+    }
+
     await createJobApplicationAction(
       {
         recruiterUserID: jobItem?.recruiterId,
-        name: profileInfo?.candidateName,
+        fullName: profileInfo?.fullName,
         email: profileInfo?.email,
         candidateUserID: profileInfo?.userId,
         status: "Applied", // Status should be a string, not an array
         jobID: jobItem?.id,
         jobApplicationDate: new Date().toISOString(),
       },
-      "/dashboard/jobs"
+      "/jobs"
     );
     setShowJobDetails(false);
   }
 
-  console.log(jobApplications, "jobApplications");
+  // console.log(jobApplications, "jobApplications");
 
   return (
     <Drawer open={showJobDetails} onOpenChange={setShowJobDetails}>

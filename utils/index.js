@@ -2,8 +2,8 @@
 export const recruiterOnboardFormControls = [
   {
     label: "Name",
-    name: "recruiterName",
-    placeholder: "Enter Your name",
+    name: "fullName",
+    placeholder: "Enter Your fullName",
     componentType: "input",
   },
   {
@@ -12,52 +12,28 @@ export const recruiterOnboardFormControls = [
     placeholder: "Enter Your Company Name",
     componentType: "input",
   },
-  {
-    label: "Company Role",
-    name: "companyRole",
-    placeholder: "Enter Your Company Role",
-    componentType: "input",
-  },
 ];
 
 // default initial Recruiter Form Data
 export const initialRecruiterFormData = {
-  recruiterName: "",
+  fullName: "",
   companyName: "",
-  companyRole: "",
 };
 
 // this is recruiter form controls
 export const candidateOnboardFormControls = [
   {
-    label: "Document Photo",
-    name: "documentPhoto",
-    // placeholder: "Enter Your Document Photo (ID / PASSPORT / DRIVER's LICENSE)",
-    componentType: "file",
+    label: "Name",
+    name: "fullName",
+    placeholder: "Enter Your fullName",
+    componentType: "input",
   },
   {
     label: "Resume",
     name: "resume",
     componentType: "file",
   },
-  {
-    label: "Name",
-    name: "candidateName",
-    placeholder: "Enter Your name",
-    componentType: "input",
-  },
-  {
-    label: "Current Company",
-    name: "currentCompany",
-    placeholder: "Enter Your current company",
-    componentType: "input",
-  },
-  {
-    label: "Current Job Location",
-    name: "currentJobLocation",
-    placeholder: "Enter Your Current Job Location",
-    componentType: "input",
-  },
+
   {
     label: "Preferred Job Location",
     name: "preferredJobLocation",
@@ -65,54 +41,18 @@ export const candidateOnboardFormControls = [
     componentType: "input",
   },
   {
-    label: "Current Salary",
-    name: "currentSalary",
-    placeholder: "Enter Your Current Salary",
-    componentType: "input",
-  },
-  {
-    label: "Notice Period",
-    name: "noticePeriod",
-    placeholder: "Enter Your Notice Period",
-    componentType: "input",
-  },
-  {
     label: "Skills",
     name: "skills",
-    placeholder: "Enter Your Skills",
-    componentType: "input",
-  },
-  {
-    label: "Total Experience",
-    name: "totalExperience",
-    placeholder: "Enter Your Total Experience",
-    componentType: "input",
-  },
-  {
-    label: "College Location",
-    name: "collegeLocation",
-    placeholder: "Enter Your College Location",
-    componentType: "input",
-  },
-  {
-    label: "Graduated Year",
-    name: "graduatedYear",
-    placeholder: "Enter Your Graduated Year",
-    componentType: "input",
-  },
-  {
-    label: "Linkedin Profile",
-    name: "linkedinProfile",
-    placeholder: "Enter Your Linkedin Profile",
+    placeholder: "List your services e.g Painter, Plumbing etc",
     componentType: "input",
   },
 ];
 
 // default initial candidate Recruiter Form Data
 export const initialCandidateFormData = {
-  documentPhoto: "",
+  fullName: "",
   resume: "",
-  currentCompany: "",
+  companyName: "",
   currentJobLocation: "",
   preferredJobLocation: "",
   currentSalary: "",
@@ -138,7 +78,6 @@ export const postNewJobFormControls = [
     name: "companyName", // ensure this matches the jobFormData key
     placeholder: "Company Name",
     componentType: "input",
-    disabled: true,
   },
   {
     label: "Title",
@@ -174,7 +113,7 @@ export const postNewJobFormControls = [
   {
     label: "Skills",
     name: "skills",
-    placeholder: "Skills Needed",
+    placeholder: "Skills Needed e.g Painting, Plumbing",
     componentType: "input",
   },
 ];

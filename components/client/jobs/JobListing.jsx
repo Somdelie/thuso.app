@@ -6,25 +6,7 @@ import RecruiterJobCard from "./RecruiterJobCard";
 import CandidateJobCard from "./candidate-card";
 import { filterMenuDataArray } from "@/utils";
 
-const JobListing = ({
-  user,
-  profileInfo,
-  jobList,
-  jobApplications,
-  filterCategories,
-}) => {
-  // console.log(jobApplications);
-
-  // const filterMenus = filterMenuDataArray.map((item) => ({
-  //   id: item.id,
-  //   name: item.label,
-  //   options: [
-  //     ...new Set(filterCategories?.map((listItem) => listItem[item.id])),
-  //   ],
-  // }));
-
-  // console.log(filterMenus, "Filter Menu");
-
+const JobListing = ({ user, profileInfo, jobList, jobApplications }) => {
   return (
     <div>
       <div className="mx-auto max-w-7xl">
@@ -38,7 +20,11 @@ const JobListing = ({
             {profileInfo?.role === "CANDIDATE" ? (
               <p>Filter</p>
             ) : (
-              <PostNewJob profileInfo={profileInfo} user={user} />
+              <PostNewJob
+                jobList={jobList}
+                profileInfo={profileInfo}
+                user={user}
+              />
             )}
           </div>
         </div>

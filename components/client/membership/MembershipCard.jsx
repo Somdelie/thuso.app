@@ -103,7 +103,7 @@ const MembershipCard = ({ plan, profileInfo }) => {
       });
     }
 
-    console.log(extractPriceId);
+    // console.log(extractPriceId);
   }
 
   async function updateMembership() {
@@ -144,14 +144,7 @@ const MembershipCard = ({ plan, profileInfo }) => {
     }
   }, []);
 
-  if (paymentSuccess === true) {
-    return toast({
-      title: "Your now a premium user",
-      description: "well done",
-    });
-  }
-
-  console.log(profileInfo, "Member Updated");
+  // console.log(profileInfo, "Member Updated");
 
   return (
     <Card className="p-2 grid ">
@@ -164,7 +157,7 @@ const MembershipCard = ({ plan, profileInfo }) => {
             <span className="font-semibold">${plan?.price}</span> /m
           </div>
         </CardHeader>
-        <CardContent className="h-[65%] px-4 text-[#707a91] text-sm">
+        <CardContent className="h-[65%] px-4 py-3 text-[#707a91] text-sm">
           <p>{plan?.desc}</p>
           <div className="mt-4 flex flex-col h-full flex-shrink">
             {plan?.benefits?.map((item, i) => (

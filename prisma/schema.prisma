@@ -9,13 +9,13 @@ generator client {
 
 model Job {
   id           String        @id @default(auto()) @map("_id") @db.ObjectId
-  companyName  String
+  companyName  String?
   title        String
   type         String
   location     String
-  experience   String
+  experience   String?
   description  String
-  skills       String
+  skills       String?
   recruiterId  String
   applications Application[]
 }
@@ -23,7 +23,7 @@ model Job {
 model Application {
   id                 String   @id @default(auto()) @map("_id") @db.ObjectId
   recruiterUserID    String
-  name               String
+  fullName           String
   email              String
   candidateUserID    String
   status             String
@@ -38,6 +38,7 @@ model Application {
 model Profile {
   id                  String    @id @default(auto()) @map("_id") @db.ObjectId
   userId              String
+  fullName            String
   role                Role
   email               String
   isPremiumUser       Boolean
@@ -49,15 +50,10 @@ model Profile {
   stripeSubscriptionId String? // Add this field
 
   // Recruiter specific fields
-  recruiterName        String?
-  recruiterCompanyName String?
-  recruiterCompanyRole String?
 
   // Candidate specific fields
-  documentPhoto        String?
   resume               String?
-  candidateName        String?
-  currentCompany       String?
+  companyName          String?
   currentJobLocation   String?
   preferredJobLocation String?
   currentSalary        String?
@@ -68,6 +64,23 @@ model Profile {
   graduatedYear        String?
   linkedinProfile      String?
   isCandidatePremium   Boolean?
+}
+
+model Feed {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId   String
+  fullName String
+  message  String
+  image    String?
+  likes    Like[]
+}
+
+model Like {
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  reactorUserId   String
+  reactorUserName String
+  Feed            Feed?   @relation(fields: [feedId], references: [id])
+  feedId          String? @db.ObjectId
 }
 
 enum Role {

@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 
-export function MegaMenu() {
+export function MegaMenu({ setShowSidebar }) {
   const [showMegaMenu, setShowMegaMenu] = useState(false);
 
   return (
@@ -28,10 +28,14 @@ export function MegaMenu() {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem onClick={() => setShowMegaMenu(false)}>
-          <Link href="/candidates">Candidates</Link>
+          <Link href="/candidates" onClick={() => setShowSidebar(false)}>
+            Candidates
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setShowMegaMenu(false)}>
-          <Link href="/jobs">Jobs</Link>
+          <Link href="/jobs" onClick={() => setShowSidebar(false)}>
+            Jobs
+          </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

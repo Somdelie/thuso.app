@@ -54,27 +54,22 @@ const Onboard = () => {
 
   useEffect(() => {
     if (file) handleUploadPdfToSupabase();
-  });
+  }, [file]);
 
   function handleTabChange(value) {
     setCurrentTab(value);
   }
 
-  // console.log(candidateFormData);
-
   const handleRecruiterFormValid = () => {
     return (
       recruiterFormData &&
-      recruiterFormData.recruiterName.trim() !== "" &&
-      recruiterFormData.companyRole.trim() !== "" &&
+      recruiterFormData.fullName.trim() !== "" &&
       recruiterFormData.companyName.trim() !== ""
     );
   };
 
   function handleCandidateFormValid() {
-    return Object.keys(candidateFormData).every(
-      (key) => candidateFormData[key].trim() === ""
-    );
+    return candidateFormData && candidateFormData.fullName.trim() !== "";
   }
 
   const createProfileAction = async () => {
@@ -94,7 +89,12 @@ const Onboard = () => {
             userId: user?.id,
             email: user?.primaryEmailAddress?.emailAddress,
           };
-    await createProfile(data, "/onboard");
+
+    if (data.candidateInfo?.fullName || data.recruiterInfo?.fullName) {
+      await createProfile(data);
+    } else {
+      console.error("Full name is required");
+    }
   };
 
   return (
@@ -123,7 +123,7 @@ const Onboard = () => {
             formData={candidateFormData}
             setFormData={setCandidateFormData}
             handleFileChange={handleFileChange}
-            isButtonDisabled={handleCandidateFormValid()}
+            isButtonDisabled={!handleCandidateFormValid()}
           />
         </TabsContent>
         <TabsContent value="recruiter">

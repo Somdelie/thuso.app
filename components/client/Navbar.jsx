@@ -6,10 +6,18 @@ import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { MegaMenu } from "./MegaMenu";
+import { useState } from "react";
+import Image from "next/image";
 
 const Navbar = ({ user, profileInfo }) => {
+  const [showSidebar, setShowSidebar] = useState(false);
   const menuItems = [
     // this only shown if the user is not logged in
+    {
+      Label: "Feeds",
+      path: "/feeds",
+      show: true,
+    },
     {
       Label: "Login",
       path: "/sign-in",
@@ -29,19 +37,19 @@ const Navbar = ({ user, profileInfo }) => {
     {
       Label: "Membership",
       path: "/membership",
-      show: user,
+      show: profileInfo,
     },
     {
       Label: "Account",
       path: "/account",
-      show: user,
+      show: profileInfo,
     },
   ];
 
   return (
-    <header className="flex bg-white/85 shadow-sm text-muted-foreground sticky top-5 border-b justify-between px-6 z-30 items-center h-10">
+    <header className="flex bg-white/95 shadow-sm text-muted-foreground sticky top-0 border-b justify-between px-6 z-30 items-center h-14">
       {/* //this is a mobile navigation */}
-      <Sheet>
+      <Sheet open={showSidebar} onOpenChange={setShowSidebar}>
         <SheetTrigger asChild>
           <Button variant="ghost" size="icon" className="md:hidden">
             <AlignJustify className="h-6 w-6" />
@@ -49,16 +57,30 @@ const Navbar = ({ user, profileInfo }) => {
           </Button>
         </SheetTrigger>
         <SheetContent side="left">
-          <Link className="mr-6 hidden lg:flex" href="#">
-            THUSO.COM
-          </Link>
+          <div className="w-full border-b-2">
+            <Link
+              className="mr-6 lg:flex"
+              href="#"
+              onClick={() => setShowSidebar(false)}
+            >
+              <Image
+                src="/thuso-logo.png"
+                alt="logo"
+                width={40}
+                height={60}
+                className="aspect-auto"
+              />
+            </Link>
+          </div>
+
           <div className="grid gap-2 py-6">
-            <MegaMenu />
+            <MegaMenu setShowSidebar={setShowSidebar} />
             {menuItems?.map((menuItem) =>
               menuItem.show ? (
                 <Link
                   href={menuItem.path}
                   key={menuItem.Label}
+                  onClick={() => setShowSidebar(false)}
                   className="flex w-full items-center py-2 text-lg font-semibold px-4 rounded-lg hover:bg-sky-600 hover:text-white"
                 >
                   {menuItem.Label}
@@ -70,7 +92,13 @@ const Navbar = ({ user, profileInfo }) => {
         </SheetContent>
       </Sheet>
       <Link className="hidden md:flex mr-6" href="/">
-        Thuso.com
+        <Image
+          src="/thuso-logo.png"
+          alt="logo"
+          width={40}
+          height={60}
+          className="aspect-auto"
+        />
       </Link>
       {/* this is a medium and large screen navigation */}
       <nav className=" hidden md:flex gap-2">

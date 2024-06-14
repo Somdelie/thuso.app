@@ -25,7 +25,7 @@ const CandidateList = ({
   async function handleFetchCandidateDetails(getCurrentCandidateId) {
     const data = await getCandidateDetailsByID(getCurrentCandidateId);
 
-    console.log(data);
+    // console.log(data);
 
     if (data) {
       setCurrentCandidateDetails(data);
@@ -46,7 +46,7 @@ const CandidateList = ({
               >
                 <div className="flex items-center justify-between px-4 py-6">
                   <h3 className="text-lg font-bold">
-                    {jobApplicantItem?.name}
+                    {jobApplicantItem?.fullName}
                   </h3>
                   <Button
                     onClick={() =>

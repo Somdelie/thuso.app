@@ -3,10 +3,21 @@ import prismaDB from "@/utils/dbConnect";
 import { revalidatePath } from "next/cache";
 
 // Create a new job application
+
+// Create a new job application
+// Create a new job application
 export async function createJobApplicationAction(formData, pathToRevalidate) {
+  const { jobID, ...restFormData } = formData;
   const applicationData = {
-    ...formData,
+    ...restFormData,
+    job: {
+      connect: {
+        id: jobID, // Connect the job using the jobID
+      },
+    },
   };
+
+  // console.log(applicationData, "ApplicationData");
 
   const application = await prismaDB.application.create({
     data: applicationData,

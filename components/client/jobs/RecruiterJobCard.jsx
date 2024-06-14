@@ -29,7 +29,7 @@ const RecruiterJobCard = ({ jobItem, jobApplications }) => {
     (item) => item.jobID === jobItem?.id
   ).length;
 
-  // console.log(jobItem);
+  console.log(jobItem);
 
   const [showApplicantDrawers, setShowApplicantsDrawer] = useState(false);
   const [currentCandidateDetails, setCurrentCandidateDetails] = useState(null);

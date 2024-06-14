@@ -28,9 +28,12 @@ const AccountInfo = ({ profileInfo }) => {
       profileInfo?.role === "CANDIDATE"
         ? {
             // userId: profileInfo?.userId,
-            role: candidateFormData.role,
             email: candidateFormData.email,
-            candidateName: candidateFormData.candidateName,
+            fullName: candidateFormData.fullName,
+            resume: candidateFormData.resume,
+            preferredJobLocation: candidateFormData.preferredJobLocation,
+            companyName: candidateFormData.companyName,
+            skills: candidateFormData.skills,
             isPremiumUser: candidateFormData.isPremiumUser,
             memberShipType: candidateFormData.memberShipType,
             memberShipStartDate: candidateFormData.memberShipStartDate,
@@ -41,7 +44,7 @@ const AccountInfo = ({ profileInfo }) => {
             // userId: profileInfo?.userId,
             role: recruiterFormData.role,
             email: recruiterFormData.email,
-            email: candidateFormData.email,
+
             recruiterName: recruiterFormData.recruiterName,
             isPremiumUser: recruiterFormData.isPremiumUser,
             memberShipType: recruiterFormData.memberShipType,
