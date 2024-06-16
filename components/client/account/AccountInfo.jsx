@@ -44,8 +44,8 @@ const AccountInfo = ({ profileInfo }) => {
             // userId: profileInfo?.userId,
             role: recruiterFormData.role,
             email: recruiterFormData.email,
-
-            recruiterName: recruiterFormData.recruiterName,
+            companyName: recruiterFormData.companyName,
+            fullName: recruiterFormData.fullName,
             isPremiumUser: recruiterFormData.isPremiumUser,
             memberShipType: recruiterFormData.memberShipType,
             memberShipStartDate: recruiterFormData.memberShipStartDate,

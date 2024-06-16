@@ -10,3 +10,5 @@ export async function getCandidateDetailsByID(currentCandidateID) {
   // console.log(currentCandidate);
   return currentCandidate;
 }
+
+export async function getAllCandidates() {}

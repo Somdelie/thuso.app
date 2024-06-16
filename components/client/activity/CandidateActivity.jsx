@@ -2,8 +2,9 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ActivityCard from "./ActivityCard";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
-const CandidateActivity = ({ applications }) => {
+const CandidateActivity = ({ applications, jobs }) => {
   // const appliedJobs = applications.filter((app) => app.status === "Applied");
   const selectedJobs = applications.filter((app) => app.status === "Selected");
   const rejectedJobs = applications.filter((app) => app.status === "Rejected");
@@ -17,6 +18,7 @@ const CandidateActivity = ({ applications }) => {
             <TabsTrigger value="Applied">Applied</TabsTrigger>
             <TabsTrigger value="Selected">Selected</TabsTrigger>
             <TabsTrigger value="Rejected">Rejected</TabsTrigger>
+            <TabsTrigger value="jobs">Jobs</TabsTrigger>
           </TabsList>
         </div>
         <div className="pb-24 pt-6">
@@ -66,6 +68,31 @@ const CandidateActivity = ({ applications }) => {
                         key={application.id}
                         job={application.job}
                       />
+                    ))
+                  )}
+                </div>
+              </TabsContent>
+              <TabsContent value="jobs">
+                <div className="grid gap-4 w-full">
+                  {jobs?.length < 1 ? (
+                    <div className="w-full text-center flex items-center justify-center font-semibold">
+                      No Jobs For You Yet
+                    </div>
+                  ) : (
+                    jobs?.map((job) => (
+                      <Card key={job.id}>
+                        <CardHeader className="">
+                          <h2 className="whitespace-nowrap text-muted-foreground">
+                            Employer Name:{" "}
+                            <span className="font-semibold text-gray-900">
+                              {job?.fullName}
+                            </span>
+                          </h2>
+                        </CardHeader>
+                        <CardContent>
+                          <p>{job?.jobDescription}</p>
+                        </CardContent>
+                      </Card>
                     ))
                   )}
                 </div>

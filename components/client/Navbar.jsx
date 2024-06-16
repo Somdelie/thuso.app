@@ -44,6 +44,11 @@ const Navbar = ({ user, profileInfo }) => {
       path: "/account",
       show: profileInfo,
     },
+    {
+      Label: "Admin",
+      path: "/admin",
+      show: profileInfo?.isAdmin === true,
+    },
   ];
 
   return (

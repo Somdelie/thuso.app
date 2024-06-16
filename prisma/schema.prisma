@@ -18,6 +18,9 @@ model Job {
   skills       String?
   recruiterId  String
   applications Application[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Application {
@@ -43,6 +46,7 @@ model Profile {
   email               String
   isPremiumUser       Boolean
   memberShipType      String?
+  isAdmin             Boolean
   memberShipStartDate DateTime?
   memberShipEndDate   DateTime?
 
@@ -50,7 +54,6 @@ model Profile {
   stripeSubscriptionId String? // Add this field
 
   // Recruiter specific fields
-
   // Candidate specific fields
   resume               String?
   companyName          String?
@@ -64,6 +67,24 @@ model Profile {
   graduatedYear        String?
   linkedinProfile      String?
   isCandidatePremium   Boolean?
+  candidateJobs        candidateJobs[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model candidateJobs {
+  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  fullName       String
+  email          String
+  phoneNumber    String
+  jobDescription String
+
+  Profile   Profile? @relation(fields: [profileId], references: [id])
+  profileId String?  @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Feed {
@@ -73,6 +94,9 @@ model Feed {
   message  String
   image    String?
   likes    Like[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Like {
@@ -81,6 +105,9 @@ model Like {
   reactorUserName String
   Feed            Feed?   @relation(fields: [feedId], references: [id])
   feedId          String? @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Role {

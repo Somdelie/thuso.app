@@ -11,6 +11,7 @@ export async function createProfile(data, pathToRevalidate) {
   const profileData = {
     ...rest,
     fullName: recruiterInfo?.fullName || candidateInfo?.fullName,
+    isAdmin: false,
     documentPhoto: candidateInfo?.documentPhoto,
     resume: candidateInfo?.resume,
     currentJobLocation: candidateInfo?.currentJobLocation,

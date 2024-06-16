@@ -2,6 +2,7 @@
 import { createProfile } from "@/actions/create-profile";
 import Form from "@/components/common/Form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/components/ui/use-toast";
 import {
   candidateOnboardFormControls,
   initialCandidateFormData,
@@ -31,30 +32,57 @@ const Onboard = () => {
   const currentAuthCurrentUser = useUser();
   const { user } = currentAuthCurrentUser;
 
+  const [uploading, setUploading] = useState(false);
+  const [imageData, setImageData] = useState(null);
+
+  const { toast } = useToast();
+
   const handleFileChange = (event) => {
     event.preventDefault();
-    setFile(event.target.files[0]);
+    setImageData(event.target.files[0]);
   };
 
-  const handleUploadPdfToSupabase = async () => {
-    const { data, error } = await supabaseClient.storage
+  const handleFetchImagePublicUrl = (getData) => {
+    const { data } = supabaseClient.storage
       .from("thuso-com")
-      .upload(`/public/${file.name}`, file, {
-        cacheControl: "3600",
-        upsert: false,
-      });
-    console.log(data, error);
-    if (data) {
+      .getPublicUrl(getData);
+
+    if (data)
       setCandidateFormData({
         ...candidateFormData,
-        resume: data.path,
+        resume: data.publicUrl,
       });
+
+    console.log(data, "image url");
+  };
+
+  const handleUploadImageToSupabase = async () => {
+    setUploading(true);
+    if (imageData) {
+      const { data, error } = await supabaseClient.storage
+        .from("thuso-com")
+        .upload(`public/${imageData.name}`, imageData, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+      if (error) {
+        toast({
+          variant: "destructive",
+          title: "Error uploading image!",
+          description: error.message,
+        });
+        console.error("Error uploading image:", error.message);
+      } else {
+        handleFetchImagePublicUrl(data.path);
+      }
     }
+    setUploading(false);
   };
 
   useEffect(() => {
-    if (file) handleUploadPdfToSupabase();
-  }, [file]);
+    handleUploadImageToSupabase();
+  }, [imageData]);
 
   function handleTabChange(value) {
     setCurrentTab(value);
@@ -78,6 +106,7 @@ const Onboard = () => {
         ? {
             candidateInfo: candidateFormData,
             role: "CANDIDATE",
+            isAdmin: false,
             isPremiumUser: false,
             userId: user?.id,
             email: user?.primaryEmailAddress?.emailAddress,
