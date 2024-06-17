@@ -9,19 +9,35 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
-import { initialPostNewJobFormData, postNewJobFormControls } from "@/utils";
+import {
+  initialPostNewJobFormData,
+  postNewJobFormControls as basePostNewJobFormControls,
+} from "@/utils";
 import { Save } from "lucide-react";
 import { useState } from "react";
 
-const PostNewJob = ({ profileInfo, user, jobList }) => {
-  const [showJobDialog, setShowJobDialog] = useState();
+const PostNewJob = ({ profileInfo, user, jobList, categories }) => {
+  const [showJobDialog, setShowJobDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [jobFormData, setJobFormData] = useState({
     ...initialPostNewJobFormData,
   });
 
   const { toast } = useToast();
 
-  // console.log(jobList, "Job List");
+  // Create the form controls with the categories fetched from the database
+  const postNewJobFormControls = basePostNewJobFormControls.map((control) => {
+    if (control.name === "Category") {
+      return {
+        ...control,
+        options: categories.map((category) => ({
+          value: category.id,
+          label: category.categoryName,
+        })),
+      };
+    }
+    return control;
+  });
 
   const isEmptyValues = () => {
     return Object.keys(jobFormData).every(
@@ -30,13 +46,16 @@ const PostNewJob = ({ profileInfo, user, jobList }) => {
   };
 
   const createNewJob = async () => {
+    setIsLoading(true);
     await postNewJobAction(
       {
         ...jobFormData,
+        Category: jobFormData.Category, // Directly use the Category ID string
         recruiterId: user?.id,
       },
       "/jobs"
     );
+    setIsLoading(false);
     setJobFormData({
       ...initialPostNewJobFormData,
     });
@@ -81,8 +100,15 @@ const PostNewJob = ({ profileInfo, user, jobList }) => {
             <Form
               buttonText={
                 <>
-                  <Save className="mr-4" />
-                  Save
+                  {isLoading ? (
+                    "Please wait..."
+                  ) : (
+                    <>
+                      {" "}
+                      <Save className="mr-4" />
+                      Save
+                    </>
+                  )}
                 </>
               }
               formData={jobFormData}

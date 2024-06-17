@@ -35,7 +35,7 @@ const HireModal = ({
   const handleSendProposal = async () => {
     await createProposalFeedAction(
       {
-        profileId: profileInfo?.id,
+        profileId: candidate?.id,
         fullName: profileInfo?.fullName,
         email: profileInfo?.email,
         phoneNumber: formData.phoneNumber,

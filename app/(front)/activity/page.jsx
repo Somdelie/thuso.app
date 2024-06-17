@@ -20,7 +20,8 @@ const ActivityPage = async () => {
   // Fetch applications for the current candidate
   const applications = await fetchApplicationsForCandidate(user?.id);
   const profileInfo = await fetchProfile(user?.id);
-  const jobs = await fetchProposalForCandidate(profileInfo?.id);
+  console.log(profileInfo?.id, "profile Info");
+  const jobs = await fetchProposalForCandidate();
 
   return <CandidateActivity applications={applications} jobs={jobs} />;
 };

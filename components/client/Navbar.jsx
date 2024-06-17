@@ -37,12 +37,12 @@ const Navbar = ({ user, profileInfo }) => {
     {
       Label: "Membership",
       path: "/membership",
-      show: profileInfo,
+      show: user,
     },
     {
       Label: "Account",
       path: "/account",
-      show: profileInfo,
+      show: user,
     },
     {
       Label: "Admin",

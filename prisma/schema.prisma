@@ -7,6 +7,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Category {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  categoryName String
+  jobs         Job[]
+}
+
 model Job {
   id           String        @id @default(auto()) @map("_id") @db.ObjectId
   companyName  String?
@@ -19,8 +25,10 @@ model Job {
   recruiterId  String
   applications Application[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?   @db.ObjectId
 }
 
 model Application {

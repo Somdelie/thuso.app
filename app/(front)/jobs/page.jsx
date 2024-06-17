@@ -2,6 +2,7 @@ import {
   fetchJobApplicationsForCandidate,
   fetchJobApplicationsForRecruiter,
 } from "@/actions/application";
+import { fetchCategories } from "@/actions/categoryAction";
 import {
   fetchJobsForCandidateAction,
   fetchJobsForRecruiterAction,
@@ -21,23 +22,24 @@ const JobPage = async () => {
       ? await fetchJobsForCandidateAction(user?.id)
       : await fetchJobsForRecruiterAction(user?.id);
 
-  console.log(profileInfo, "This is profile info");
-
   const getJobApplicationList =
     profileInfo?.role === "CANDIDATE"
       ? await fetchJobApplicationsForCandidate(user?.id)
       : await fetchJobApplicationsForRecruiter(user?.id);
 
-  const fetchFilterCategories = await fetchJobsForCandidateAction();
+  const categories = await fetchCategories();
 
   if (!user) redirect("/sign-in");
   if (user && !profileInfo) redirect("/onboard");
+
+  // console.log(jobList, "Jobs");
 
   return (
     <JobListing
       user={JSON.parse(JSON.stringify(user))}
       profileInfo={profileInfo}
       jobList={jobList}
+      categories={categories}
       jobApplications={getJobApplicationList}
     />
   );

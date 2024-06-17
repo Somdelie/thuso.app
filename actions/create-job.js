@@ -9,12 +9,14 @@ export async function postNewJobAction(formData, pathToRevalidate) {
     applications: {
       create: [],
     },
+    Category: {
+      connect: { id: formData.Category },
+    },
   };
 
   const job = await prismaDB.job.create({
     data: jobData,
   });
-
   revalidatePath(pathToRevalidate);
   return job;
 }
@@ -25,14 +27,45 @@ export async function fetchJobsForRecruiterAction(id) {
     where: {
       recruiterId: id,
     },
-    include: { applications: true },
+    include: {
+      applications: true,
+      Category: true,
+    },
   });
 
   return result;
 }
 
 // Fetch all jobs for candidates
-export async function fetchJobsForCandidateAction() {
-  const result = await prismaDB.job.findMany();
+// Fetch all jobs for candidates
+export async function fetchJobsForCandidateAction(searchParams = {}) {
+  const { title, skill } = searchParams;
+
+  // console.log("Search Params:", searchParams); // Log the search parameters
+
+  const result = await prismaDB.job.findMany({
+    where: {
+      OR: [
+        {
+          title: {
+            contains: title || "",
+            mode: "insensitive",
+          },
+        },
+        {
+          skills: {
+            contains: skill || "",
+            mode: "insensitive",
+          },
+        },
+      ],
+    },
+    include: {
+      Category: true,
+    },
+  });
+
+  // console.log("Result:", result); // Log the result of the query
+
   return result;
 }

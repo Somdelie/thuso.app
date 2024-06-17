@@ -5,9 +5,10 @@ import ActivityCard from "./ActivityCard";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 const CandidateActivity = ({ applications, jobs }) => {
-  // const appliedJobs = applications.filter((app) => app.status === "Applied");
   const selectedJobs = applications.filter((app) => app.status === "Selected");
   const rejectedJobs = applications.filter((app) => app.status === "Rejected");
+
+  console.log(jobs, "this is candidate hired jobs");
 
   return (
     <div className="mx-auto max-w-7xl">

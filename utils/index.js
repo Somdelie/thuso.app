@@ -86,6 +86,13 @@ export const postNewJobFormControls = [
     componentType: "input",
   },
   {
+    label: "Category",
+    name: "Category",
+    placeholder: "Select a category",
+    componentType: "select",
+    options: [], // This will be populated dynamically
+  },
+  {
     label: "Type",
     name: "type",
     placeholder: "Job Type",
@@ -122,11 +129,25 @@ export const postNewJobFormControls = [
 export const initialPostNewJobFormData = {
   companyName: "",
   title: "",
+  Category: "",
   type: "",
   location: "",
   experience: "",
   description: "",
   skills: "",
+};
+
+export const createCategoryFormControls = [
+  {
+    label: "Category Name",
+    name: "categoryName", // ensure this matches the jobFormData key
+    placeholder: "Construction",
+    componentType: "input",
+  },
+];
+
+export const initialCreateCategoryFormData = {
+  categoryName: "",
 };
 
 export const filterMenuDataArray = [

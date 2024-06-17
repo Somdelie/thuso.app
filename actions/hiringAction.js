@@ -11,11 +11,12 @@ export async function createProposalFeedAction(data, pathToRevalidate) {
   return result;
 }
 
-export async function fetchProposalForCandidate(id) {
+export async function fetchProposalForCandidate(profileId) {
   const result = await prismaDB.candidateJobs.findMany({
     where: {
-      profileId: id,
+      profileId: profileId,
     },
+    // include: { Profile: true },
   });
   console.log(result);
   return result;
