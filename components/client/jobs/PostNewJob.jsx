@@ -63,7 +63,7 @@ const PostNewJob = ({ profileInfo, user, jobList, categories }) => {
   };
 
   function handleAddNewJob() {
-    if (!profileInfo?.isPremiumUser && jobList.length >= 3) {
+    if (!profileInfo?.isPremiumUser && jobList.length >= 2) {
       toast({
         variant: "destructive",
         title: "Please Get Membership",
