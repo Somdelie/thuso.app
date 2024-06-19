@@ -11,4 +11,10 @@ export async function getCandidateDetailsByID(currentCandidateID) {
   return currentCandidate;
 }
 
-export async function getAllCandidates() {}
+export async function getAllCandidates() {
+  const candidates = await prismaDB.profile.findMany({
+    where: { role: "CANDIDATE" },
+  });
+
+  return candidates;
+}

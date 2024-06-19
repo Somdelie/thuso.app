@@ -75,7 +75,9 @@ const Admin = ({ categories }) => {
     <div>
       <div className="flex items-center justify-between border-b pb-4">
         <h1 className="text-lg font-semibold md:text-2xl">Categories</h1>
-        <Button onClick={handleAddNewCategory}>Add New Category</Button>
+        <Button onClick={handleAddNewCategory} className="bg-sky-700">
+          Add New Category
+        </Button>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 py-4 md:grid-cols-4 lg:grid-cols-5 w-full gap-4">
         {categories && categories.length > 0 ? (

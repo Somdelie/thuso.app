@@ -36,7 +36,38 @@ export async function fetchJobsForRecruiterAction(id) {
   return result;
 }
 
-// Fetch all jobs for candidates
+// Fetch all jobs
+export async function fetchAllJobs(searchParams = {}) {
+  const { title, skill } = searchParams;
+
+  // console.log("Search Params:", searchParams); // Log the search parameters
+
+  const result = await prismaDB.job.findMany({
+    where: {
+      OR: [
+        {
+          title: {
+            contains: title || "",
+            mode: "insensitive",
+          },
+        },
+        {
+          skills: {
+            contains: skill || "",
+            mode: "insensitive",
+          },
+        },
+      ],
+    },
+    include: {
+      Category: true,
+    },
+  });
+
+  // console.log("Result:", result); // Log the result of the query
+
+  return result;
+}
 // Fetch all jobs for candidates
 export async function fetchJobsForCandidateAction(searchParams = {}) {
   const { title, skill } = searchParams;

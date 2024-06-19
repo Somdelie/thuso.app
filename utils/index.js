@@ -1,3 +1,5 @@
+import { Category, Chat, LineStyle, People, Work } from "@mui/icons-material";
+
 // this is recruiter form controls
 export const recruiterOnboardFormControls = [
   {
@@ -241,5 +243,89 @@ export const membershipPlans = [
         list: "Meeting",
       },
     ],
+  },
+];
+
+export const AdminLinks = [
+  {
+    title: "Dashboard",
+    link: "/admin",
+    icon: <LineStyle />,
+  },
+  {
+    title: "Candidates",
+    link: "/admin/candidates",
+    icon: <People />,
+  },
+  {
+    title: "Categories",
+    link: "/admin/categories",
+    icon: <Category />,
+  },
+  {
+    title: "Jobs",
+    link: "/admin/jobs",
+    icon: <Work />,
+  },
+  {
+    title: "Messages",
+    link: "/admin/messages",
+    icon: <Chat />,
+  },
+];
+
+export const jobColumns = [
+  {
+    accessorKey: "title",
+    header: "Title",
+    cell: ({ row }) => row.getValue("title"),
+  },
+  {
+    accessorKey: "companyName",
+    header: "Company",
+    cell: ({ row }) => row.getValue("companyName"),
+  },
+  {
+    accessorKey: "type",
+    header: "Type",
+    cell: ({ row }) => row.getValue("type"),
+  },
+  {
+    accessorKey: "location",
+    header: "Location",
+    cell: ({ row }) => row.getValue("location"),
+  },
+  {
+    accessorKey: "createdAt",
+    header: "Created At",
+    cell: ({ row }) => new Date(row.getValue("createdAt")).toLocaleDateString(),
+  },
+  {
+    accessorKey: "updatedAt",
+    header: "Updated At",
+    cell: ({ row }) => new Date(row.getValue("updatedAt")).toLocaleDateString(),
+  },
+];
+
+export const candidateColumns = [
+  {
+    accessorKey: "fullName",
+    header: "Full Name",
+    cell: ({ row }) => row.getValue("fullName"),
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+    cell: ({ row }) => row.getValue("email"),
+  },
+  {
+    accessorKey: "role",
+    header: "Role",
+    cell: ({ row }) => row.getValue("role"),
+  },
+  {
+    accessorKey: "isPremiumUser",
+    header: "Premium User",
+    cell: ({ row }) => (row.getValue("isPremiumUser") ? "Yes" : "No"),
   },
 ];
