@@ -1,16 +1,5 @@
 "use client";
 
-import { MoreHorizontal } from "lucide-react";
-import { Button } from "../ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Preview } from "@mui/icons-material";
 import ActionCell from "./ActionCell";
 
 export const jobColumns = [

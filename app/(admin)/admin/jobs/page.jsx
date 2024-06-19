@@ -1,6 +1,7 @@
 import { fetchAllJobs } from "@/actions/create-job";
+import { jobColumns } from "@/components/admin/AdminColumns";
 import { DataTable } from "@/components/admin/DataTable";
-import { jobColumns } from "@/components/admin/columns";
+
 import React from "react";
 
 const AdminJobsPage = async () => {

@@ -1,6 +1,6 @@
 import { getAllCandidates } from "@/actions/candidateActions";
+import { candidateColumns } from "@/components/admin/AdminColumns";
 import { DataTable } from "@/components/admin/DataTable";
-import { candidateColumns } from "@/components/admin/columns";
 import React from "react";
 
 const AdminCandidatesPage = async () => {

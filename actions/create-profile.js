@@ -25,7 +25,6 @@ export async function createProfile(data, pathToRevalidate) {
     linkedinProfile: candidateInfo?.linkedinProfile,
     isCandidatePremium: candidateInfo?.isCandidatePremium,
   };
-  console.log(profileData);
   const profile = await prismaDB.profile.create({
     data: profileData,
   });
@@ -50,8 +49,6 @@ export async function updateProfile(userId, data, pathToRevalidate) {
     data,
   });
 
-  console.log("Profile updated:", profile);
-
   revalidatePath(pathToRevalidate);
   return profile;
 }
@@ -68,8 +65,6 @@ export async function updatedProfile(userId, data, pathToRevalidate) {
       memberShipStartDate: new Date(),
     },
   });
-
-  console.log("Profile updated:", profile);
 
   revalidatePath(pathToRevalidate);
   return profile;
