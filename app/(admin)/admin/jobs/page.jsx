@@ -15,7 +15,7 @@ const AdminJobsPage = async () => {
           <DataTable data={jobs} columns={jobColumns} type="jobs" />
         </div>
       ) : (
-        <h2>No jobs available</h2>
+        <h2>No jobs available at the moment</h2>
       )}
     </div>
   );
