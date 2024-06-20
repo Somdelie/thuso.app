@@ -69,3 +69,44 @@ export async function updatedProfile(userId, data, pathToRevalidate) {
   revalidatePath(pathToRevalidate);
   return profile;
 }
+
+// Update profile admin function
+export async function updatedProfileAdmin(
+  rowId,
+  dataToUpdate,
+  pathToRevalidate
+) {
+  try {
+    const { id, candidateJobs, ...restData } = dataToUpdate; // Extract candidateJobs if needed
+
+    const updatedProfile = await prismaDB.profile.update({
+      where: { id: rowId },
+      data: {
+        ...restData, // Update other fields
+        candidateJobs: {
+          // Handle candidateJobs update if necessary
+          // Use appropriate nested update/connect operations as needed
+          // Example:
+          // connect: candidateJobs.map(job => ({ id: job.id })) // Connect existing candidateJobs
+          // updateMany: candidateJobs.map(job => ({ where: { id: job.id }, data: { ...job } })) // Update existing candidateJobs
+        },
+      },
+    });
+
+    revalidatePath(pathToRevalidate);
+
+    return updatedProfile;
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    throw new Error("Failed to update profile");
+  }
+}
+
+export async function getAllProfiles() {
+  const profiles = await prismaDB.profile.findMany({
+    include: {
+      candidateJobs: true,
+    },
+  });
+  return profiles;
+}

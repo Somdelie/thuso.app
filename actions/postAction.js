@@ -13,7 +13,7 @@ export async function createFeedPostAction(data, pathToRevalidate) {
   const result = await prismaDB.feed.create({
     data: postData,
   });
-  console.log(result);
+
   revalidatePath(pathToRevalidate);
   return result;
 }

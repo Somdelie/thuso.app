@@ -18,6 +18,5 @@ export async function fetchProposalForCandidate(profileId) {
     },
     // include: { Profile: true },
   });
-  console.log(result);
   return result;
 }

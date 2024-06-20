@@ -1,4 +1,12 @@
-import { Category, Chat, LineStyle, People, Work } from "@mui/icons-material";
+import {
+  Category,
+  Chat,
+  LineStyle,
+  Newspaper,
+  People,
+  SettingsApplicationsRounded,
+  Work,
+} from "@mui/icons-material";
 
 // this is recruiter form controls
 export const recruiterOnboardFormControls = [
@@ -271,6 +279,16 @@ export const AdminLinks = [
     title: "Messages",
     link: "/admin/messages",
     icon: <Chat />,
+  },
+  {
+    title: "Feeds",
+    link: "/admin/feeds",
+    icon: <Newspaper />,
+  },
+  {
+    title: "Applications",
+    link: "/admin/applications",
+    icon: <SettingsApplicationsRounded />,
   },
 ];
 

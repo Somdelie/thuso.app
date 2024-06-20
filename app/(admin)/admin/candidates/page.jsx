@@ -1,19 +1,20 @@
 import { getAllCandidates } from "@/actions/candidateActions";
+import { getAllProfiles } from "@/actions/create-profile";
 import { candidateColumns } from "@/components/admin/AdminColumns";
 import { DataTable } from "@/components/admin/DataTable";
 import React from "react";
 
 const AdminCandidatesPage = async () => {
-  const candidates = await getAllCandidates();
+  const profiles = await getAllProfiles();
   return (
     <div className="w-full">
       <div className="flex items-center pb-2 border-b">
         <h1 className="text-lg font-semibold md:text-2xl">Candidates</h1>
       </div>
-      {candidates ? (
+      {profiles ? (
         <div className="w-full">
           <DataTable
-            data={candidates}
+            data={profiles}
             columns={candidateColumns}
             type="candidates"
           />

@@ -13,7 +13,7 @@ export async function createCategoryAction(data, pathToRevalidate) {
   const result = await prismaDB.category.create({
     data: categoryData,
   });
-  console.log(result, "This is Category");
+
   revalidatePath(pathToRevalidate);
   return result;
 }
@@ -35,7 +35,7 @@ export async function updateCategoryAction(data, id, pathToRevalidate) {
     where: { id },
     data: categoryData,
   });
-  console.log(result, "Updated Category");
+
   revalidatePath(pathToRevalidate);
   return result;
 }

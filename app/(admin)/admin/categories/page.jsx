@@ -6,8 +6,6 @@ import React from "react";
 const CategoriesPage = async () => {
   const categories = await fetchCategories();
 
-  console.log(categories, "This are the categories");
-
   return <Admin categories={categories} />;
 };
 
