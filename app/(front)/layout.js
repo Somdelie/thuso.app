@@ -7,10 +7,12 @@ export default async function ClientLayout({ children }) {
   const user = await currentUser();
   const profileInfo = await fetchProfile(user?.id);
 
-  // console.log(profileInfo);
+  // console.log(premiumProfile);
+
+  // console.log(profileInfo, "this is profile info");
 
   return (
-    <div className="mx-auto max-w-7xl p-6 lg:px-8">
+    <div className="mx-auto w-full ">
       <Navbar
         user={JSON.parse(JSON.stringify(user))}
         profileInfo={profileInfo}
