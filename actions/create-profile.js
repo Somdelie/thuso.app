@@ -108,5 +108,19 @@ export async function getAllProfiles() {
       candidateJobs: true,
     },
   });
+  // console.log(profiles, "Jobs profile");
+  return profiles;
+}
+
+export async function getPremiumJobs() {
+  const profiles = await prismaDB.profile.findMany({
+    where: {
+      role: "RECRUITER",
+    },
+    include: {
+      jobs: true,
+    },
+  });
+  console.log(profiles, "Jobs profile");
   return profiles;
 }

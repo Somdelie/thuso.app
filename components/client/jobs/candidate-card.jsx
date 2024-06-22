@@ -23,8 +23,15 @@ import {
 import { useState } from "react";
 import { createJobApplicationAction } from "@/actions/application";
 import { useToast } from "@/components/ui/use-toast";
+import Link from "next/link";
 
-const CandidateJobCard = ({ jobItem, jobApplications, profileInfo }) => {
+const CandidateJobCard = ({
+  jobItem,
+  jobApplications,
+  profileInfo,
+  user,
+  categories,
+}) => {
   const [showJobDetails, setShowJobDetails] = useState(false);
 
   const { toast } = useToast();
@@ -88,11 +95,31 @@ const CandidateJobCard = ({ jobItem, jobApplications, profileInfo }) => {
           </p>
         </CardContent>
         <CardFooter>
-          <DrawerTrigger>
-            <Button className="w-full">
-              <EyeIcon className="mr-2 h-4 w-4" /> View Job Details
-            </Button>
-          </DrawerTrigger>
+          {!user ? (
+            <Link
+              className="bg-gray-900 text-white hover:opacity-90 py-2 rounded w-full flex items-center justify-center"
+              href={`/jobs/${jobItem?.id}`}
+            >
+              View Job Details
+            </Link>
+          ) : (
+            <>
+              {profileInfo?.role !== "CANDIDATE" ? (
+                <Link
+                  className="bg-gray-900 text-white hover:opacity-90 py-2 rounded w-full flex items-center justify-center"
+                  href={`/jobs/${jobItem?.id}`}
+                >
+                  View Job Details
+                </Link>
+              ) : (
+                <DrawerTrigger>
+                  <Button className="w-full">
+                    <EyeIcon className="mr-2 h-4 w-4" /> View Job Details
+                  </Button>
+                </DrawerTrigger>
+              )}
+            </>
+          )}
         </CardFooter>
       </Card>
       <DrawerContent className="p-6">

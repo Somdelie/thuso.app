@@ -1,23 +1,45 @@
-import { fetchProfile } from "@/actions/create-profile";
-import { getPremiumCandidates } from "@/actions/homePageAction";
+import { fetchCategories } from "@/actions/categoryAction";
+import {
+  fetchProfile,
+  getAllProfiles,
+  getPremiumJobs,
+} from "@/actions/create-profile";
+import {
+  getFeaturedJobs,
+  getGoldCandidates,
+  getPremiumCandidates,
+} from "@/actions/homePageAction";
+import PremiumJobs from "@/components/client/home/PremiumJobs";
 import TopRated from "@/components/client/home/TopRated";
 import HeroButtons from "@/components/common/HeroButtons";
 import { Button } from "@/components/ui/button";
 import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
-import Link from "next/link";
+import {
+  fetchJobApplicationsForCandidate,
+  fetchJobApplicationsForRecruiter,
+} from "@/actions/application";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
   // getting logged-in user from clerk
   const user = await currentUser();
   const premiumProfile = await getPremiumCandidates();
+  const goldProfile = await getGoldCandidates();
+  const featuredJobs = await getFeaturedJobs();
   // we define user profile patties
   const profileInfo = await fetchProfile(user?.id);
 
-  console.log(premiumProfile, "Premium users");
+  // console.log(goldJobs, "Premium jobs");
 
   if (user && !profileInfo?.id) redirect("/onboard");
+
+  const getJobApplicationList =
+    profileInfo?.role === "CANDIDATE"
+      ? await fetchJobApplicationsForCandidate(user?.id)
+      : await fetchJobApplicationsForRecruiter(user?.id);
+
+  const categories = await fetchCategories();
 
   return (
     <div className="w-full">
@@ -73,7 +95,13 @@ export default async function Home() {
         <div className="w-[90%] mx-auto my-4">
           <h2 className="font-semibold text-2xl underline">Recommend Jobs</h2>
         </div>
-        <TopRated premiumProfile={premiumProfile} />
+        <PremiumJobs
+          featuredJobs={featuredJobs}
+          user={JSON.parse(JSON.stringify(user))}
+          profileInfo={profileInfo}
+          categories={categories}
+          jobApplications={getJobApplicationList}
+        />
       </section>
       <section className="w-full bg-white py-8 ">
         <div className="w-[90%] mx-auto my-4">
@@ -81,7 +109,7 @@ export default async function Home() {
             Most Viewed Candidates
           </h2>
         </div>
-        <TopRated premiumProfile={premiumProfile} />
+        <TopRated premiumProfile={goldProfile} />
       </section>
     </div>
   );

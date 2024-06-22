@@ -23,9 +23,9 @@ const PostNewJob = ({ profileInfo, user, jobList, categories }) => {
     ...initialPostNewJobFormData,
   });
 
+  // console.log(profileInfo, "Profile Info");
   const { toast } = useToast();
 
-  // Create the form controls with the categories fetched from the database
   const postNewJobFormControls = basePostNewJobFormControls.map((control) => {
     if (control.name === "Category") {
       return {
@@ -50,8 +50,9 @@ const PostNewJob = ({ profileInfo, user, jobList, categories }) => {
     await postNewJobAction(
       {
         ...jobFormData,
-        Category: jobFormData.Category, // Directly use the Category ID string
+        Category: jobFormData.Category,
         recruiterId: user?.id,
+        profileId: profileInfo?.id,
       },
       "/jobs"
     );

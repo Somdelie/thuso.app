@@ -1,3 +1,4 @@
+import JobListing from "@/components/client/jobs/JobListing";
 import {
   fetchJobApplicationsForCandidate,
   fetchJobApplicationsForRecruiter,
@@ -8,12 +9,9 @@ import {
   fetchJobsForRecruiterAction,
 } from "@/actions/create-job";
 import { fetchProfile } from "@/actions/create-profile";
-import JobListing from "@/components/client/jobs/JobListing";
 import { currentUser } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
-import React from "react";
 
-const JobPage = async () => {
+const BrowseJobsPage = async () => {
   const user = await currentUser();
   const profileInfo = await fetchProfile(user?.id);
 
@@ -29,11 +27,6 @@ const JobPage = async () => {
 
   const categories = await fetchCategories();
 
-  if (!user) redirect("/sign-in");
-  if (user && !profileInfo) redirect("/onboard");
-
-  // console.log(jobList, "Jobs");
-
   return (
     <div className="max-w-[90%] mx-auto">
       <JobListing
@@ -47,4 +40,4 @@ const JobPage = async () => {
   );
 };
 
-export default JobPage;
+export default BrowseJobsPage;

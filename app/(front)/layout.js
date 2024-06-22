@@ -1,5 +1,6 @@
 import { fetchProfile } from "@/actions/create-profile";
 import Navbar from "@/components/client/Navbar";
+import Footer from "@/components/common/Footer";
 import { currentUser } from "@clerk/nextjs/server";
 
 export default async function ClientLayout({ children }) {
@@ -18,6 +19,7 @@ export default async function ClientLayout({ children }) {
         profileInfo={profileInfo}
       />
       <main className="py-4">{children}</main>
+      <Footer />
     </div>
   );
 }

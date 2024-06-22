@@ -13,7 +13,18 @@ const HeroButtons = ({ user, profileInfo }) => {
 
   return (
     <div className="flex space-x-4">
-      <Button className="pushable" href="#">
+      <Button
+        className="pushable"
+        onClick={() =>
+          router.push(
+            user
+              ? profileInfo?.role === "CANDIDATE"
+                ? "/jobs"
+                : "/candidates"
+              : "/jobs"
+          )
+        }
+      >
         <span className="shadow"></span>
         <span className="edge"></span>
         <span className="front bg-sky-600">
@@ -33,7 +44,7 @@ const HeroButtons = ({ user, profileInfo }) => {
               ? profileInfo?.role === "CANDIDATE"
                 ? "/activity"
                 : "/jobs"
-              : "/jobs"
+              : "/browse"
           )
         }
       >

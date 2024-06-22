@@ -6,13 +6,19 @@ import { revalidatePath } from "next/cache";
 export async function postNewJobAction(formData, pathToRevalidate) {
   const jobData = {
     ...formData,
+    isFeatured: false,
     applications: {
       create: [],
     },
     Category: {
       connect: { id: formData.Category },
     },
+    Profile: {
+      connect: { id: formData.profileId },
+    },
   };
+
+  delete jobData.profileId; // Remove profileId from the top-level data
 
   const job = await prismaDB.job.create({
     data: jobData,
@@ -98,6 +104,16 @@ export async function fetchJobsForCandidateAction(searchParams = {}) {
   });
 
   // console.log("Result:", result); // Log the result of the query
+
+  return result;
+}
+
+export async function getJobId(jobId) {
+  const result = await prismaDB.job.findUnique({
+    where: {
+      id: jobId,
+    },
+  });
 
   return result;
 }

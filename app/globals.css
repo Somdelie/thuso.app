@@ -83,13 +83,13 @@
 
   .parent {
 
-    height: 300px;
+    height: 350px;
     perspective: 1000px;
   }
   
   .card {
     height: 100%;
-    border-radius: 50px;
+    border-radius: 20px;
     background: linear-gradient(135deg, rgb(0, 217, 255) 0%, rgb(1, 127, 147) 100%);
     transition: all 0.5s ease-in-out;
     transform-style: preserve-3d;
