@@ -15,7 +15,7 @@ import {
 import { Save } from "lucide-react";
 import { useState } from "react";
 
-const AdminPostJob = ({ user, categories }) => {
+const AdminPostJob = ({ user, categories, profileInfo }) => {
   const [showJobDialog, setShowJobDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [jobFormData, setJobFormData] = useState({
@@ -49,6 +49,7 @@ const AdminPostJob = ({ user, categories }) => {
         ...jobFormData,
         Category: jobFormData.Category, // Directly use the Category ID string
         recruiterId: user?.id,
+        profileId: profileInfo?.id,
       },
       "/admin/jobs"
     );
@@ -75,7 +76,7 @@ const AdminPostJob = ({ user, categories }) => {
           <DialogHeader>
             <DialogTitle>Post New Job</DialogTitle>
           </DialogHeader>
-          <div className="grid w-full gap-4 py-4">
+          <div className="grid my-8 w-full gap-4 py-4">
             <Form
               buttonText={
                 <>

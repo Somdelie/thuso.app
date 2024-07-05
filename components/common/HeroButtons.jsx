@@ -12,7 +12,7 @@ const HeroButtons = ({ user, profileInfo }) => {
   }, []);
 
   return (
-    <div className="flex space-x-4">
+    <div className="flex space-y-4 flex-wrap items-start space-x-4">
       <Button
         className="pushable"
         onClick={() =>

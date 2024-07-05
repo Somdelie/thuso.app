@@ -2,71 +2,37 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
-const RecentUsers = () => {
+const RecentUsers = ({ latestProfiles }) => {
+  const getInitials = (fullName) => {
+    const [firstName, lastName] = fullName.split(" ");
+    return `${firstName[0]}${lastName[0]}`;
+  };
   return (
-    <Card x-chunk="dashboard-01-chunk-5">
+    <Card x-chunk="dashboard-01-chunk-5" className="md:min-h-screen">
       <CardHeader>
         <CardTitle>Recent Profiles</CardTitle>
       </CardHeader>
-      <CardContent className="grid gap-8">
-        <div className="flex items-center gap-4">
-          <Avatar className=" h-9 w-9 sm:flex">
-            <AvatarImage src="/01.png" alt="Avatar" />
-            <AvatarFallback>OM</AvatarFallback>
-          </Avatar>
-          <div className="grid gap-1">
-            <p className="text-sm font-medium leading-none">Olivia Martin</p>
-            <p className="text-sm text-muted-foreground">
-              olivia.martin@email.com
-            </p>
+      <CardContent className="grid gap-4">
+        {latestProfiles.map((profile) => (
+          <div
+            key={profile?.id}
+            className="flex border-b py-2 hover:bg-muted items-center gap-4"
+          >
+            <Avatar className="h-9 w-9 sm:flex">
+              <AvatarImage
+                src={profile?.avatarUrl || "/default-avatar.png"}
+                alt={`${profile?.fullName}`}
+              />
+              <AvatarFallback className="bg-orange-500 text-white font-semibold">
+                {getInitials(profile?.fullName)}
+              </AvatarFallback>
+            </Avatar>
+            <div className="grid gap-1">
+              <p className="text-sm font-medium leading-none">{`${profile?.fullName}`}</p>
+              <p className="text-sm text-muted-foreground">{profile?.email}</p>
+            </div>
           </div>
-        </div>
-        <div className="flex items-center gap-4">
-          <Avatar className=" h-9 w-9 sm:flex">
-            <AvatarImage src="/02.png" alt="Avatar" />
-            <AvatarFallback>JL</AvatarFallback>
-          </Avatar>
-          <div className="grid gap-1">
-            <p className="text-sm font-medium leading-none">Jackson Lee</p>
-            <p className="text-sm text-muted-foreground">
-              jackson.lee@email.com
-            </p>
-          </div>
-        </div>
-        <div className="flex items-center gap-4">
-          <Avatar className=" h-9 w-9 sm:flex">
-            <AvatarImage src="/03.png" alt="Avatar" />
-            <AvatarFallback>IN</AvatarFallback>
-          </Avatar>
-          <div className="grid gap-1">
-            <p className="text-sm font-medium leading-none">Isabella Nguyen</p>
-            <p className="text-sm text-muted-foreground">
-              isabella.nguyen@email.com
-            </p>
-          </div>
-        </div>
-        <div className="flex items-center gap-4">
-          <Avatar className=" h-9 w-9 sm:flex">
-            <AvatarImage src="/04.png" alt="Avatar" />
-            <AvatarFallback>WK</AvatarFallback>
-          </Avatar>
-          <div className="grid gap-1">
-            <p className="text-sm font-medium leading-none">William Kim</p>
-            <p className="text-sm text-muted-foreground">will@email.com</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-4">
-          <Avatar className=" h-9 w-9 sm:flex">
-            <AvatarImage src="/05.png" alt="Avatar" />
-            <AvatarFallback>SD</AvatarFallback>
-          </Avatar>
-          <div className="grid gap-1">
-            <p className="text-sm font-medium leading-none">Sofia Davis</p>
-            <p className="text-sm text-muted-foreground">
-              sofia.davis@email.com
-            </p>
-          </div>
-        </div>
+        ))}
       </CardContent>
     </Card>
   );

@@ -84,6 +84,13 @@ const jobTypeOptions = [
 // this is new job post form controls
 export const postNewJobFormControls = [
   {
+    label: "Category",
+    name: "Category",
+    placeholder: "Select a category",
+    componentType: "select",
+    options: [], // This will be populated dynamically
+  },
+  {
     label: "Company Name",
     name: "companyName", // ensure this matches the jobFormData key
     placeholder: "Company Name",
@@ -95,13 +102,7 @@ export const postNewJobFormControls = [
     placeholder: "Job Title",
     componentType: "input",
   },
-  {
-    label: "Category",
-    name: "Category",
-    placeholder: "Select a category",
-    componentType: "select",
-    options: [], // This will be populated dynamically
-  },
+
   {
     label: "Type",
     name: "type",

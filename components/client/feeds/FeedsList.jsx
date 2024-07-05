@@ -11,6 +11,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { createFeedPostAction } from "@/actions/postAction";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const supabaseClient = createClient(
   "https://lyfonawvuwlvyluvlokf.supabase.co",
@@ -135,7 +137,7 @@ const FeedsList = ({ user, profileInfo, allFeedPosts }) => {
         }}
       >
         <DialogContent className="p-8 max-w-[90%] md:max-w-[80%] mx-auto">
-          <Textarea
+          {/* <Textarea
             name="message"
             onChange={(event) =>
               setFormData({
@@ -146,8 +148,19 @@ const FeedsList = ({ user, profileInfo, allFeedPosts }) => {
             value={formData?.message}
             className="resize-none h-[200px] my-3 border-none text-[20px] outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="What do you want to talk about?"
+          /> */}
+          <ReactQuill
+            theme="snow"
+            name="message"
+            onChange={(event) =>
+              setFormData({
+                ...formData,
+                message: event.target.value,
+              })
+            }
+            value={formData?.message}
           />
-          <div className="flex gap-5 items-center justify-between">
+          <div className="flex mt-4 gap-5 items-center justify-between">
             {imageData ? (
               <div className="w-[40px] h-[40px]">
                 <Image

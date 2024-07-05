@@ -84,17 +84,10 @@ const Admin = ({ categories }) => {
           categories?.map((category) => (
             <div
               key={category?.id}
-              className="bg-gray-900 transition p-2 hover:bg-sky-600 cursor-pointer hover:scale-105 rounded text-white font-semibold h-16 items-center justify-between flex flex-col relative group"
+              className="bg-gray-900 transition hover:bg-sky-600 cursor-pointer hover:scale-105 rounded text-white font-semibold h-14 justify-center flex items-center"
               onClick={() => handleEditCategory(category)} // Add onClick handler for edit
             >
-              <h2 className="pr-2">
-                {" "}
-                {category?.categoryName?.substring(0, 15)}
-              </h2>
-              <Pencil
-                className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                size={18}
-              />
+              <h2>{category?.categoryName?.substring(0, 15)}</h2>
             </div>
           ))
         ) : (

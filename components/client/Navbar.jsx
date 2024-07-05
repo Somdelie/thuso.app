@@ -18,16 +18,6 @@ const Navbar = ({ user, profileInfo }) => {
       path: "/feeds",
       show: true,
     },
-    {
-      Label: "Login",
-      path: "/sign-in",
-      show: !user,
-    },
-    {
-      Label: "Register",
-      path: "/sign-up",
-      show: !user,
-    },
 
     {
       Label: "Activity",
@@ -51,8 +41,21 @@ const Navbar = ({ user, profileInfo }) => {
     },
   ];
 
+  const rightItems = [
+    {
+      Label: "Login",
+      path: "/sign-in",
+      show: !user,
+    },
+    {
+      Label: "Register",
+      path: "/sign-up",
+      show: !user,
+    },
+  ];
+
   return (
-    <header className="flex bg-white/95 shadow-sm text-muted-foreground sticky top-0 border-b justify-between px-6 z-30 items-center h-14">
+    <header className="flex bg-white/95 bg-slate-500 text-white shadow-sm text-muted-foreground sticky top-0 border-b justify-between px-6 z-30 items-center h-14">
       {/* //this is a mobile navigation */}
       <Sheet open={showSidebar} onOpenChange={setShowSidebar}>
         <SheetTrigger asChild>
@@ -65,7 +68,7 @@ const Navbar = ({ user, profileInfo }) => {
           <div className="w-full border-b-2">
             <Link
               className="mr-6 lg:flex"
-              href="#"
+              href="/"
               onClick={() => setShowSidebar(false)}
             >
               <Image
@@ -106,7 +109,7 @@ const Navbar = ({ user, profileInfo }) => {
         />
       </Link>
       {/* this is a medium and large screen navigation */}
-      <nav className=" hidden md:flex gap-2">
+      <nav className=" hidden w-full justify-end md:flex gap-2">
         <Link
           href="/"
           className="group inline-flex hover:text-main transition h-9 w-max items-center rounded-md px-2 py-2 text-sm font-medium"
@@ -129,6 +132,19 @@ const Navbar = ({ user, profileInfo }) => {
 
         {/* this is a logged in user button */}
       </nav>
+      <div className=" w-full flex justify-end items-center">
+        {rightItems?.map((menuItem) =>
+          menuItem.show ? (
+            <Link
+              href={menuItem.path}
+              key={menuItem.Label}
+              className="group inline-flex hover:text-main transition h-9 w-max items-center rounded-md px-2 py-2 text-sm font-medium"
+            >
+              {menuItem.Label}
+            </Link>
+          ) : null
+        )}
+      </div>
       <UserButton />
     </header>
   );

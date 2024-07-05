@@ -139,7 +139,7 @@ export async function deleteJobAction(jobId, pathToRevalidate) {
 export async function editJobAction(rowId, jobData, pathToRevalidate) {
   console.log(jobData, "Job data");
   try {
-    const { id, categoryId, ...dataToUpdate } = jobData; // Destructure to exclude the `id` field and handle Category separately
+    const { id, profileId, categoryId, ...dataToUpdate } = jobData; // Destructure to exclude the `id` field and handle Category separately
 
     const job = await prismaDB.job.update({
       where: {

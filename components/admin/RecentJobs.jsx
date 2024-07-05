@@ -20,75 +20,51 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "../ui/badge";
 
-const RecentJobs = () => {
+const RecentJobs = ({ latestJobs }) => {
   return (
     <div className="col-span-2">
       <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
         <CardHeader className="flex flex-row items-center">
           <div className="grid gap-2">
-            <CardTitle>Candidates</CardTitle>
-            <CardDescription>
-              Recent candidates from your store.
-            </CardDescription>
+            <CardTitle>Jobs</CardTitle>
+            <CardDescription>Recent jobs from your app.</CardDescription>
           </div>
         </CardHeader>
         <CardContent>
           <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Title</TableHead>
+                <TableHead className="hidden md:table-cell">Category</TableHead>
+                <TableHead className="hidden md:table-cell">Status</TableHead>
+                <TableHead className="hidden md:table-cell">Date</TableHead>
+              </TableRow>
+            </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>
-                  <div className="font-medium">Liam Johnson</div>
-                </TableCell>
-                <TableCell className="hidden xl:table-column">Sale</TableCell>
-                <TableCell className="hidden xl:table-column">
-                  <Badge className="text-xs" variant="outline">
-                    Approved
-                  </Badge>
-                </TableCell>
-                <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
-                  2023-06-23
-                </TableCell>
-                <TableCell className="text-right">
-                  {" "}
-                  <div className="hidden text-sm text-muted-foreground md:inline">
-                    liam@example.com
-                  </div>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <div className="font-medium">Olivia Smith</div>
-                </TableCell>
-                <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
-                  2023-06-24
-                </TableCell>
-                <TableCell className="text-right">
-                  {" "}
-                  <div className="hidden text-sm text-muted-foreground md:inline">
-                    olivia@example.com
-                  </div>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <div className="font-medium">Noah Williams</div>
-                </TableCell>
-                <TableCell className="hidden md:table-cell lg:hidden xl:table-column">
-                  2023-06-25
-                </TableCell>
-                <TableCell className="text-right">
-                  {" "}
-                  <div className="hidden text-sm text-muted-foreground md:inline">
-                    noah@example.com
-                  </div>
-                </TableCell>
-              </TableRow>
+              {latestJobs.map((job) => (
+                <TableRow key={job?.id}>
+                  <TableCell>
+                    <div className="font-medium">{job?.title}</div>
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {job?.Category?.categoryName}
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    <Badge className="text-xs" variant="outline">
+                      {job?.isFeatured ? "Featured" : "Standard"}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {new Date(job?.createdAt).toLocaleDateString()}
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </CardContent>
         <CardFooter>
           <Button asChild size="sm" className="ml-auto gap-1">
-            <Link href="#">
+            <Link href="/admin/jobs">
               View All
               <ArrowUpRight className="h-4 w-4" />
             </Link>
