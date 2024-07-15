@@ -20,6 +20,7 @@ import {
   fetchJobApplicationsForRecruiter,
 } from "@/actions/application";
 import { redirect } from "next/navigation";
+import { TransitionalText } from "@/components/common/TransitionalText";
 
 export default async function Home() {
   // getting logged-in user from clerk
@@ -41,27 +42,40 @@ export default async function Home() {
 
   const categories = await fetchCategories();
 
+  const TEXTS = [
+    "The Only Freelance Job Platform You Will Need.",
+    "We are dedicated to creating a world where freelancers and businesses can find their dream",
+    "Find Your Dream Jobs With Only Few Clicks",
+    "Your Unique Skillset Can Earn You money!",
+    "We take the work out of looking for work",
+    "Get the candidates you need, now",
+  ];
+
   return (
     <div className="w-full">
-      <section className="max-w-[90%] mx-auto min-h-[75vh]">
-        <div className="bg-white">
+      <section className="max-w-[100%] min-h-screen bg-heroBg">
+        <div className="w-[90%] mx-auto">
           <div className="relative w-full">
-            <div className="min-h-screen flex">
+            <div className="flex">
               <div className="container m-auto p-0">
                 <div className="flex items-center flex-wrap gap-12 lg:gap-0">
-                  <div className="lg:w-5/12 space-y-8">
-                    <span className="flex items-center space-x-2">
+                  <div className="lg:w-6/12 overflow-hidden space-y-8 h-full flex flex-col justify-between">
+                    <span className="flex items-center space-x-2 mb-6">
                       <span className="block w-14 border-b-2 border-gray-700"></span>
                       <span className="font-medium text-gray-600">
                         One Stop Solution to Find Jobs
                       </span>
                     </span>
-                    <h1 className="text-3xl font-bold text-sky-600 md:text-6xl">
-                      The Best <br /> Job Portal App
-                    </h1>
-                    <p className="text-xl text-gray-700">
-                      Find Best Jobs From Top Product Based Companies and Build
-                      Your Career
+                    <TransitionalText
+                      TEXTS={TEXTS}
+                      className="text-gray-900 min-h-24 flex-shrink mb-6 text-xl md:text-3xl font-black leading-6"
+                    />
+                    {/* <h1 className="text-3xl font-bold text-sky-600 md:text-6xl">
+                      Find Your <span>Dream Jobs</span> With Only Few Clicks
+                    </h1> */}
+                    <p className="text-xl text-gray-500 my-4">
+                      Skip the headache and expense of opening up entities in
+                      other countries. Remote does the hard work for you.
                     </p>
                     <HeroButtons
                       user={JSON.parse(JSON.stringify(user))}
@@ -71,8 +85,8 @@ export default async function Home() {
                   <div className="relative ml-auto">
                     <Image
                       src="/project.svg"
-                      width={500}
-                      height={500}
+                      width={400}
+                      height={400}
                       alt="Job Portal"
                       className="object-contain"
                     />
@@ -81,6 +95,9 @@ export default async function Home() {
               </div>
             </div>
           </div>
+        </div>
+        <div className="w-full py-8 bg-orangeBg">
+          <div className="max-w-[90%] mx-auto py-8"></div>
         </div>
       </section>
       <section className="w-full bg-gradient-to-b from-gray-100 via-white to-gray-100 py-8 rounded-t-[20px]">

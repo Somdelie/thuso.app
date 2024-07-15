@@ -12,9 +12,9 @@ const HeroButtons = ({ user, profileInfo }) => {
   }, []);
 
   return (
-    <div className="flex space-y-4 flex-wrap items-start space-x-4">
+    <div className="w-full gap-4 grid grid-cols-2">
       <Button
-        className="pushable"
+        className=" w-full"
         onClick={() =>
           router.push(
             user
@@ -25,18 +25,14 @@ const HeroButtons = ({ user, profileInfo }) => {
           )
         }
       >
-        <span className="shadow"></span>
-        <span className="edge"></span>
-        <span className="front bg-sky-600">
-          {user
-            ? profileInfo?.role === "CANDIDATE"
-              ? "Browse Jobs"
-              : "Candidates"
-            : "Find Candidates"}
-        </span>
+        {user
+          ? profileInfo?.role === "CANDIDATE"
+            ? "Browse Jobs"
+            : "Candidates"
+          : "Find Candidates"}
       </Button>
       <Button
-        className="pushable"
+        className=""
         href="/jobs"
         onClick={() =>
           router.push(
@@ -48,15 +44,11 @@ const HeroButtons = ({ user, profileInfo }) => {
           )
         }
       >
-        <span className="shadow"></span>
-        <span className="edge1 "></span>
-        <span className="front bg-gray-700">
-          {user
-            ? profileInfo?.role === "CANDIDATE"
-              ? "Your Activity"
-              : "Post New Job"
-            : "Post New Job"}
-        </span>
+        {user
+          ? profileInfo?.role === "CANDIDATE"
+            ? "Your Activity"
+            : "Post New Job"
+          : "Post New Job"}
       </Button>
     </div>
   );

@@ -18,7 +18,7 @@ export default async function ClientLayout({ children }) {
         user={JSON.parse(JSON.stringify(user))}
         profileInfo={profileInfo}
       />
-      <main className="py-4 overflow-x-hidden">{children}</main>
+      <main className=" overflow-x-hidden">{children}</main>
       <Footer />
     </div>
   );

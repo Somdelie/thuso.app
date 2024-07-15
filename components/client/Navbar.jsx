@@ -55,7 +55,7 @@ const Navbar = ({ user, profileInfo }) => {
   ];
 
   return (
-    <header className="flex bg-white/95 bg-slate-500 text-white shadow-sm text-muted-foreground sticky top-0 border-b justify-between px-6 z-30 items-center h-14">
+    <header className="flex bg-heroBg text-gray-900 shadow-sm text-muted-foreground sticky top-0 border-b justify-between px-6 z-30 items-center h-14">
       {/* //this is a mobile navigation */}
       <Sheet open={showSidebar} onOpenChange={setShowSidebar}>
         <SheetTrigger asChild>
@@ -99,23 +99,29 @@ const Navbar = ({ user, profileInfo }) => {
           {/* <UserButton /> */}
         </SheetContent>
       </Sheet>
-      <Link className="hidden md:flex mr-6" href="/">
-        <Image
-          src="/thuso-logo.png"
-          alt="logo"
-          width={40}
-          height={60}
-          className="aspect-auto"
-        />
-      </Link>
+      <div className="w-full flex-1">
+        <Link className="hidden md:flex items-center mr-6 gap-1" href="/">
+          <Image
+            src="/thuso-logo.png"
+            alt="logo"
+            width={40}
+            height={60}
+            className="aspect-auto"
+          />
+          <h2 className="text-sky-600 font-black transition hover:underline">
+            THUSO.COM
+          </h2>
+        </Link>
+      </div>
       {/* this is a medium and large screen navigation */}
-      <nav className=" hidden w-full justify-end md:flex gap-2">
+      <nav className=" hidden w-full justify-center md:flex gap-2">
         <Link
           href="/"
           className="group inline-flex hover:text-main transition h-9 w-max items-center rounded-md px-2 py-2 text-sm font-medium"
         >
           Home
         </Link>
+
         {/* this is mega menu */}
         <MegaMenu />
         {menuItems?.map((menuItem) =>
@@ -132,7 +138,7 @@ const Navbar = ({ user, profileInfo }) => {
 
         {/* this is a logged in user button */}
       </nav>
-      <div className=" w-full flex justify-end items-center">
+      <div className=" flex justify-end items-center">
         {rightItems?.map((menuItem) =>
           menuItem.show ? (
             <Link
