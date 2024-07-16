@@ -47,15 +47,10 @@ const Navbar = ({ user, profileInfo }) => {
       path: "/sign-in",
       show: !user,
     },
-    {
-      Label: "Register",
-      path: "/sign-up",
-      show: !user,
-    },
   ];
 
   return (
-    <header className="flex bg-heroBg text-gray-900 shadow-sm text-muted-foreground sticky top-0 border-b justify-between px-6 z-30 items-center h-14">
+    <header className="flex bg-heroBg text-gray-900 shadow-sm text-muted-foreground sticky top-0 border-b justify-between px-6 z-30 items-center h-16">
       {/* //this is a mobile navigation */}
       <Sheet open={showSidebar} onOpenChange={setShowSidebar}>
         <SheetTrigger asChild>
@@ -72,7 +67,7 @@ const Navbar = ({ user, profileInfo }) => {
               onClick={() => setShowSidebar(false)}
             >
               <Image
-                src="/thuso-logo.png"
+                src="/thusoLogo.png"
                 alt="logo"
                 width={40}
                 height={60}
@@ -102,14 +97,14 @@ const Navbar = ({ user, profileInfo }) => {
       <div className="w-full flex-1">
         <Link className="hidden md:flex items-center mr-6 gap-1" href="/">
           <Image
-            src="/thuso-logo.png"
+            src="/thusoLogo.png"
             alt="logo"
             width={40}
             height={60}
             className="aspect-auto"
           />
-          <h2 className="text-sky-600 font-black transition hover:underline">
-            THUSO.COM
+          <h2 className="text-myMain drop-shadow-md text-xl font-black transition hover:underline">
+            THUSO<span className="text-orangeBg">.COM</span>
           </h2>
         </Link>
       </div>
@@ -144,7 +139,7 @@ const Navbar = ({ user, profileInfo }) => {
             <Link
               href={menuItem.path}
               key={menuItem.Label}
-              className="group inline-flex hover:text-main transition h-9 w-max items-center rounded-md px-2 py-2 text-sm font-medium"
+              className="group inline-flex bg-myMain rounded-full px-6 transition py-1 shadow text-white w-max items-center text-sm font-medium"
             >
               {menuItem.Label}
             </Link>

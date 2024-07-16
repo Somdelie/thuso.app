@@ -9,7 +9,7 @@ export const TransitionalText = ({ TEXTS, className }) => {
   React.useEffect(() => {
     const intervalId = setInterval(
       () => setIndex((index) => index + 1),
-      5000 // every 3 seconds
+      7000 // every 3 seconds
     );
     return () => clearTimeout(intervalId);
   }, []);

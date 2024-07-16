@@ -12,9 +12,9 @@ const HeroButtons = ({ user, profileInfo }) => {
   }, []);
 
   return (
-    <div className="w-full gap-4 grid grid-cols-2">
+    <div className="w-full md:w-1/2 mt-auto mb-auto gap-4 z-10 grid grid-cols-2">
       <Button
-        className=" w-full"
+        className=" w-full rounded-full bg-navblue home-hero "
         onClick={() =>
           router.push(
             user
@@ -32,7 +32,7 @@ const HeroButtons = ({ user, profileInfo }) => {
           : "Find Candidates"}
       </Button>
       <Button
-        className=""
+        className="rounded-full bg-myMain home-hero "
         href="/jobs"
         onClick={() =>
           router.push(
