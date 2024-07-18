@@ -60,32 +60,6 @@ const megaMenu = [
       },
     ],
   },
-
-  {
-    title: "Top Candidates",
-    content: [
-      {
-        title: "Tech Giants",
-        slug: "tech-giants",
-        desc: "Work for leading tech companies like Google, Apple, and Microsoft. Innovative projects await.",
-      },
-      {
-        title: "Startups",
-        slug: "startups",
-        desc: "Join fast-growing startups and make a significant impact. Various roles in dynamic environments.",
-      },
-      {
-        title: "Finance Firms",
-        slug: "finance-firms",
-        desc: "Top positions at leading financial institutions. Opportunities in investment and corporate finance.",
-      },
-      {
-        title: "Healthcare Organizations",
-        slug: "healthcare-organizations",
-        desc: "Work with top healthcare providers and make a difference in the medical field. Various roles available.",
-      },
-    ],
-  },
   {
     title: "Locations",
     content: [
@@ -137,7 +111,7 @@ export default function MegaMenu({ categories, premiumProfiles }) {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuTrigger className="">
-            Most Viewed Candidates
+            Top Candidates
           </NavigationMenuTrigger>
           <NavigationMenuContent className="bg-heroBg border-2 border-myMain w-full">
             <ul className="grid w-full gap-3 p-4 md:w-[500px] lg:w-[600px] ">
