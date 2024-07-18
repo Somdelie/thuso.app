@@ -29,8 +29,7 @@ const JobPage = async () => {
 
   const categories = await fetchCategories();
 
-  if (!user) redirect("/sign-in");
-  if (user && !profileInfo) redirect("/onboard");
+  if (!user) redirect("/browse");
 
   // console.log(jobList, "Jobs");
 

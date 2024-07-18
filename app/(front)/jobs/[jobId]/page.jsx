@@ -1,11 +1,17 @@
 import { getJobId } from "@/actions/create-job";
-import React from "react";
 import { format } from "date-fns";
-import { CalendarMonth, LocationOff } from "@mui/icons-material";
-import { LocateIcon } from "lucide-react";
+import { ArrowBack, CalendarMonth, LocationOff } from "@mui/icons-material";
+import { LocateIcon, Pin } from "lucide-react";
+import { currentUser } from "@clerk/nextjs/server";
+import { fetchProfile } from "@/actions/create-profile";
+
+import { createJobApplicationAction } from "@/actions/application";
+import Apply from "@/components/client/jobs/Apply";
+import Link from "next/link";
 
 const SingleJobPage = async ({ params }) => {
-  // console.log(params, "This is param");
+  const user = await currentUser();
+  const profileInfo = await fetchProfile(user?.id);
 
   const job = await getJobId(params.jobId);
 
@@ -15,7 +21,17 @@ const SingleJobPage = async ({ params }) => {
 
   return (
     <div className="max-w-[90%] mx-auto flex flex-col gap-4 min-h-[70vh] py-6">
-      <h2 className="text-xl font-semibold">{job?.title}</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-semibold">{job?.title}</h2>
+        {!profileInfo ? (
+          <span className="text-red-600">Log in to apply for this job</span>
+        ) : (
+          <Link href="/jobs">
+            <ArrowBack />
+            Go back to apply
+          </Link>
+        )}
+      </div>
       <div className="text-sm text-sky-400">
         {job.companyName ? <p>{job?.companyName}</p> : <p>N/A</p>}
       </div>

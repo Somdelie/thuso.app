@@ -27,7 +27,7 @@ const Candidates = ({ candidates, user, profileInfo }) => {
     <div className="grid gap-6 py-2">
       <Head />
       {candidates?.length > 0 ? (
-        <div className="grid md:grid-cols-2 w-full gap-2">
+        <div className="grid md:grid-cols-2 w-full gap-6">
           {candidates?.map((candidate) => (
             <Card key={candidate?.id} className="w-full">
               <CardHeader>
@@ -75,8 +75,8 @@ const Candidates = ({ candidates, user, profileInfo }) => {
                       </CarouselItem>
                     ))}
                   </CarouselContent>
-                  <CarouselPrevious className="hidden md:block" />
-                  <CarouselNext className="hidden md:block" />
+                  <CarouselPrevious className="hidden md:block disabled:hidden" />
+                  <CarouselNext className="hidden md:block disabled:hidden" />
                 </Carousel>
               </CardContent>
               <CardFooter>

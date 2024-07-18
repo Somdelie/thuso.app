@@ -48,11 +48,13 @@ const JobListing = ({
   return (
     <div>
       <div className="mx-auto max-w-7xl">
-        <div className="flex items-baseline justify-between border-b border-gray-200 pb-6">
-          <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-gray-900">
-            {profileInfo?.role === "CANDIDATE"
-              ? "Explore All Jobs"
-              : "Jobs Dashboard"}
+        <div className="flex items-baseline justify-between">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900">
+            {profileInfo?.role === "CANDIDATE" ? (
+              <span className="mt-12 text-lg">Explore All Jobs</span>
+            ) : (
+              "Jobs Dashboard"
+            )}
           </h1>
           <div className="flex items-center">
             {profileInfo?.role === "CANDIDATE" ? (

@@ -6,14 +6,14 @@ import React from "react";
 
 const Hero = ({ TEXTS, user, profileInfo }) => {
   return (
-    <div className="w-[90%] mx-auto py-4 min-h-[75vh]">
+    <div className="w-[90%] mx-auto py-4 min-h-[70vh]">
       {/* <CarouselSpacing categories={categories} /> */}
       <div className="relative w-full">
         <div className="flex">
           <div className="mx-auto p-0">
             <div className="grid pt-10 gap-4 md:grid-cols-2 lg:gap-6">
               <div className="flex flex-col gap-2 justify-center">
-                <h1 className=" text-myText flex items-start flex-wrap gap-2 text-lg font-bold !leading-[1.208] text-dark sm:text-[22px] xl:text-[32px]">
+                <h1 className=" text-myText flex items-start flex-wrap gap-2 text-2xl font-bold !leading-[1.208] text-dark sm:text-[25px] lg:text-[33px]">
                   Connecting Skilled{" "}
                   <TransitionalText
                     TEXTS={TEXTS}
@@ -21,7 +21,7 @@ const Hero = ({ TEXTS, user, profileInfo }) => {
                   />
                   <br />
                 </h1>
-                <h1 className=" text-myText flex items-center flex-wrap gap-2 text-lg font-bold !leading-[1.208] text-dark sm:text-[22px] xl:text-[32px]">
+                <h1 className="text-myText flex items-start flex-wrap gap-2 text-2xl font-bold !leading-[1.208] text-dark sm:text-[25px] lg:text-[33px]">
                   with Daily Opportunities
                 </h1>
                 <p className=" text-base text-gray-600 italic">

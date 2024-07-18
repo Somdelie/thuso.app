@@ -18,7 +18,7 @@ const CandidatesPage = async () => {
   // console.log(candidates);
 
   return (
-    <div className="">
+    <div className="max-w-[90%] mx-auto">
       <Candidates
         candidates={candidates}
         user={JSON.parse(JSON.stringify(user))}

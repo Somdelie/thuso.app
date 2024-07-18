@@ -63,18 +63,22 @@ const CandidateJobCard = ({
     setShowJobDetails(false);
   }
 
-  // console.log(jobApplications, "jobApplications");
+  const isApplied =
+    jobApplications.findIndex((item) => item.jobID === jobItem?.id) > -1;
 
   return (
     <Drawer open={showJobDetails} onOpenChange={setShowJobDetails}>
       <Card className="hover:-translate-y-2 duration-300">
         <CardHeader>
-          <CardTitle className=" w-full md:text-lg flex items-center gap-3 max-w-full text-ellipsis whitespace-nowrap overflow-hidden font-semibold">
+          <CardTitle className="relative w-full md:text-lg flex items-center gap-3 max-w-full text-ellipsis whitespace-nowrap overflow-hidden font-semibold">
             <Icon />{" "}
-            <span className="flex-grow w-full">
-              {" "}
-              {jobItem?.title?.substring(0, 25)}{" "}
-            </span>
+            <Link className="" href={`/jobs/${jobItem?.id}`}>
+              <span className="flex-grow flex items-center gap-1 w-full">
+                {" "}
+                {jobItem?.title?.substring(0, 25)}{" "}
+                <EyeIcon className="mr-2 h-4 w-4" />
+              </span>
+            </Link>
             <div className="text-sm text-sky-400">
               {jobItem.companyName ? (
                 <p>{jobItem?.companyName?.substring(0, 45)}</p>
@@ -95,7 +99,7 @@ const CandidateJobCard = ({
           </p>
         </CardContent>
         <CardFooter>
-          {!user ? (
+          {!profileInfo ? (
             <Link
               className="bg-gray-900 text-white hover:opacity-90 py-2 rounded w-full flex items-center justify-center"
               href={`/jobs/${jobItem?.id}`}
@@ -113,8 +117,8 @@ const CandidateJobCard = ({
                 </Link>
               ) : (
                 <DrawerTrigger>
-                  <Button className="w-full">
-                    <EyeIcon className="mr-2 h-4 w-4" /> View Job Details
+                  <Button className="w-full" disabled={isApplied}>
+                    {isApplied ? "Already Applied" : "Apply Now"}
                   </Button>
                 </DrawerTrigger>
               )}

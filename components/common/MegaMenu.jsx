@@ -13,6 +13,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Avatar } from "@mui/material";
+import { usePathname } from "next/navigation";
 
 const megaMenu = [
   {
@@ -88,8 +89,10 @@ const megaMenu = [
 ];
 
 export default function MegaMenu({ categories, premiumProfiles }) {
-  console.log(premiumProfiles);
-  // console.log(megaMenu);
+  const pathname = usePathname();
+  console.log(pathname);
+
+  if (pathname !== "/") return null;
   return (
     <NavigationMenu className="md:w-[92%] w-full mx-auto">
       <NavigationMenuList className=" w-full flex-wrap items-start">
