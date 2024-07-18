@@ -44,6 +44,10 @@ export default async function Home() {
 
   const categories = await fetchCategories();
 
+  // Serialize and deserialize user and profileInfo to ensure they are plain objects
+  const serializedUser = JSON.parse(JSON.stringify(user));
+  const serializedProfileInfo = JSON.parse(JSON.stringify(profileInfo));
+
   const heroInfo = [
     {
       icon: <Briefcase size={42} />,
@@ -68,18 +72,24 @@ export default async function Home() {
   ];
 
   const TEXTS = [
-    "The Only Freelance Job Platform You Will Need.",
-    // "We are dedicated to creating a world where freelancers and businesses can find their dream",
-    "Find Your Dream Jobs With Only Few Clicks",
-    "Your Unique Skillset Can Earn You money!",
-    "We take the work out of looking for work",
-    "Get the candidates you need, now",
+    "Painters",
+    "Plumbers",
+    "Cleaners",
+    "Gardeners",
+    "Carpenters",
+    "Electricians",
+    "Mechanics",
+    "Pest Control",
   ];
 
   return (
     <div className="w-full">
       <section className="max-w-[100%] min-h-screen bg-heroBg">
-        <Hero TEXTS={TEXTS} user={user} profileInfo={profileInfo} />
+        <Hero
+          TEXTS={TEXTS}
+          user={serializedUser}
+          profileInfo={serializedProfileInfo}
+        />
         <div className="w-full py-8 bg-orangeBg">
           <div className="max-w-[90%] grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 mx-auto">
             {heroInfo?.map((item, i) => (

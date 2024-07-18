@@ -1,36 +1,10 @@
-import { CarouselSpacing } from "@/components/common/CategoriesCarousel";
+/* eslint-disable react/no-unescaped-entities */
 import HeroButtons from "@/components/common/HeroButtons";
 import { TransitionalText } from "@/components/common/TransitionalText";
 import Image from "next/image";
 import React from "react";
 
 const Hero = ({ TEXTS, user, profileInfo }) => {
-  const categories = [
-    "Technology",
-    "Finance",
-    "Marketing",
-    "Design",
-    "Engineering",
-    "Legal",
-    "Healthcare",
-    "Retail",
-    "Hospitality",
-    "Manufacturing",
-    "Sports",
-    "Agriculture",
-    "Education",
-    "Consulting",
-    "Creative",
-    "Real Estate",
-    "Banking",
-    "Insurance",
-    "Advertising",
-    "Transportation",
-    "Logistics",
-    "Supply Chain",
-    "Construction",
-  ];
-
   return (
     <div className="w-[90%] mx-auto py-4 min-h-[75vh]">
       {/* <CarouselSpacing categories={categories} /> */}
@@ -38,18 +12,25 @@ const Hero = ({ TEXTS, user, profileInfo }) => {
         <div className="flex">
           <div className="mx-auto p-0">
             <div className="grid pt-10 gap-4 md:grid-cols-2 lg:gap-6">
-              <div className="w-full overflow-hidden relative h-full flex flex-col">
-                <span className="h-[300px] w-[300px] right-0 absolute rounded-full hero-span"></span>
-                <TransitionalText
-                  TEXTS={TEXTS}
-                  className="text-myText min-h-24 flex-shrink text-xl md:text-4xl font-black md:mt-8 leading-6"
-                />
-                <p className="text-xl z-10 text-gray-500 mb-2">
-                  Skip the headache and expense of opening up entities in other
-                  countries. Remote does the hard work for you.
-                </p>
-                <p className="text-xl z-10 text-gray-500 mb-6 underline italic">
-                  Connecting Skilled Workers with Daily Opportunities
+              <div className="flex flex-col gap-2 justify-center">
+                <h1 className=" text-myText flex items-start flex-wrap gap-2 text-lg font-bold !leading-[1.208] text-dark sm:text-[22px] xl:text-[32px]">
+                  Connecting Skilled{" "}
+                  <TransitionalText
+                    TEXTS={TEXTS}
+                    className="text-orange-600 whitespace-nowrap"
+                  />
+                  <br />
+                </h1>
+                <h1 className=" text-myText flex items-center flex-wrap gap-2 text-lg font-bold !leading-[1.208] text-dark sm:text-[22px] xl:text-[32px]">
+                  with Daily Opportunities
+                </h1>
+                <p className=" text-base text-gray-600 italic">
+                  At <span className="font-semibold">THUSOO.</span> Our
+                  innovative platform is designed for everyone—whether you're
+                  seeking long-term career opportunities or one-off gigs. We
+                  serve both professionals and non-professionals, individuals
+                  and companies, making the process of finding the right job or
+                  perfect candidate seamless and efficient.
                 </p>
                 <HeroButtons user={user} profileInfo={profileInfo} />
               </div>

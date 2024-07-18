@@ -67,7 +67,7 @@ const Navbar = ({ user, profileInfo }) => {
               onClick={() => setShowSidebar(false)}
             >
               <Image
-                src="/thusoLogo.png"
+                src="/t-logo.png"
                 alt="logo"
                 width={40}
                 height={60}
@@ -97,14 +97,14 @@ const Navbar = ({ user, profileInfo }) => {
       <div className="w-full flex-1">
         <Link className="hidden md:flex items-center mr-6 gap-1" href="/">
           <Image
-            src="/thusoLogo.png"
+            src="/t-logo.png"
             alt="logo"
             width={40}
             height={60}
             className="aspect-auto"
           />
-          <h2 className="text-myMain drop-shadow-md text-xl font-black transition hover:underline">
-            THUSO<span className="text-orangeBg">.COM</span>
+          <h2 className="text-orangeBg drop-shadow-md text-xl font-black transition hover:underline">
+            THUSOO
           </h2>
         </Link>
       </div>
