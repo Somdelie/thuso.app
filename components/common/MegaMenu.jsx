@@ -92,10 +92,10 @@ export default function MegaMenu({ categories, premiumProfiles }) {
   // console.log(megaMenu);
   return (
     <NavigationMenu className="md:w-[92%] w-full mx-auto">
-      <NavigationMenuList className=" w-full">
+      <NavigationMenuList className=" w-full flex-wrap items-start">
         <NavigationMenuItem>
           <NavigationMenuTrigger className="">Categories</NavigationMenuTrigger>
-          <NavigationMenuContent className="bg-heroBg border-2 border-myMain w-full">
+          <NavigationMenuContent className="bg-heroBg border-2 border-myMain w-full max-h-[400px] overflow-auto">
             <ul className="grid w-full gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               {categories?.map((category) => (
                 <NavigationMenuLink
@@ -113,7 +113,7 @@ export default function MegaMenu({ categories, premiumProfiles }) {
           <NavigationMenuTrigger className="">
             Top Candidates
           </NavigationMenuTrigger>
-          <NavigationMenuContent className="bg-heroBg border-2 border-myMain w-full">
+          <NavigationMenuContent className="bg-heroBg border-2 border-myMain w-full max-h-[400px] overflow-auto">
             <ul className="grid w-full gap-3 p-4 md:w-[500px] lg:w-[600px] ">
               {premiumProfiles?.map((profile) => (
                 <NavigationMenuLink
@@ -154,8 +154,8 @@ export default function MegaMenu({ categories, premiumProfiles }) {
             <NavigationMenuTrigger className="">
               {item?.title}
             </NavigationMenuTrigger>
-            <NavigationMenuContent className="bg-heroBg border-2 border-myMain w-full text-white">
-              <ul className="grid w-full gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+            <NavigationMenuContent className="bg-heroBg border-2 border-myMain w-full text-white max-h-[400px] overflow-auto">
+              <ul className="grid w-[90%] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                 {item?.content.map((component) => (
                   <ListItem
                     key={component.title}
