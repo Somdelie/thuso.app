@@ -24,7 +24,8 @@ const EditModal = ({
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    const newValue = name === "isAdmin" ? value === "true" : value; // Convert "true" string to boolean true
+    const newValue =
+      name === "isAdmin" || name === "isApproved" ? value === "true" : value; // Convert "true" string to boolean true
     setFormData({ ...formData, [name]: newValue });
   };
 
@@ -43,9 +44,9 @@ const EditModal = ({
   return (
     <Dialog open={showActionDialog} onOpenChange={onClose}>
       <DialogContent className="p-8 overflow-y-auto max-h-[80vh] max-w-[90%] md:max-w-[80%] mx-auto">
-        <form className="grid sm:gap-4 sm:grid-cols-2">
-          {formControls.map((control, i) => (
-            <div key={control.name} className="flex flex-col mb-4">
+        <form className="grid sm:gap-2 sm:grid-cols-2">
+          {formControls.map((control) => (
+            <div key={control.name} className="flex flex-col mb-2 w-full">
               <Label htmlFor={control.name} className="my-2">
                 {control.label}
               </Label>
@@ -53,22 +54,35 @@ const EditModal = ({
                 <select
                   id={control.name}
                   name={control.name}
-                  value={formData?.[control.name] || ""}
+                  value={String(formData?.[control.name]) || ""}
                   onChange={handleChange}
                   className={`${
-                    control.name === "isAdmin"
-                      ? "border max-w-[50%] p-2 rounded"
-                      : "border p-2 rounded"
+                    control.name === "isAdmin" || control.name === "isApproved"
+                      ? "border max-w-[50%] p-2 rounded w-full"
+                      : "border p-2 rounded w-full"
                   }`}
                 >
-                  {control.name === "isAdmin" ? (
+                  {control.name === "isAdmin" ||
+                  control.name === "isApproved" ? (
                     <>
-                      <option value="">Choose</option>
-                      {control.options.map((option) => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
+                      <option
+                        value="true"
+                        disabled={
+                          control.name === "isAdmin" &&
+                          formData?.isAdmin === true
+                        }
+                      >
+                        Yes
+                      </option>
+                      <option
+                        value="false"
+                        disabled={
+                          control.name === "isAdmin" &&
+                          formData?.isAdmin === false
+                        }
+                      >
+                        No
+                      </option>
                     </>
                   ) : (
                     categories.map((category) => (
@@ -91,7 +105,6 @@ const EditModal = ({
         </form>
         <DialogFooter>
           <div className="w-1/2 gap-2 grid grid-cols-2">
-            {" "}
             <Button onClick={onClose} className="bg-red-500">
               Cancel
             </Button>

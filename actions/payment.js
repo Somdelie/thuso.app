@@ -25,7 +25,7 @@ export async function createStripePaymentAction(data) {
     payment_method_types: ["card"],
     line_items: data?.lineItems,
     mode: "subscription",
-    success_url: "https://thuso-app.vercel.app/membership" + "/?status=success",
+    success_url: "http://localhost:3000/membership" + "/?status=success",
     cancel_url: "https://thuso-app.vercel.app/membership" + "/?status=cancel",
   });
 

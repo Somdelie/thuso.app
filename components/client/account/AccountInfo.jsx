@@ -8,9 +8,14 @@ import {
   initialRecruiterFormData,
   recruiterOnboardFormControls,
 } from "@/utils";
+import Image from "next/image";
 import { useEffect, useState } from "react";
+import { FaCamera } from "react-icons/fa6";
 
 const AccountInfo = ({ profileInfo }) => {
+  const [isAvatarLoading, setIsAvatarLoading] = useState(false);
+  const [isIdLoading, setIsIdLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [candidateFormData, setCandidateFormData] = useState(
     initialCandidateFormData
   );
@@ -30,7 +35,7 @@ const AccountInfo = ({ profileInfo }) => {
             // userId: profileInfo?.userId,
             email: candidateFormData.email,
             fullName: candidateFormData.fullName,
-            resume: candidateFormData.resume,
+            avatarUrl: candidateFormData.avatarUrl,
             preferredJobLocation: candidateFormData.preferredJobLocation,
             companyName: candidateFormData.companyName,
             skills: candidateFormData.skills,
@@ -57,19 +62,122 @@ const AccountInfo = ({ profileInfo }) => {
   };
 
   return (
-    <div className=" pb-6  pt-14">
-      <h2 className="font-bold tracking-tight text-gray-950">
-        Account Details
+    <div className=" pb-6 max-w-[90%] mx-auto pt-12">
+      <h2 className="font-bold text-2xl md:text-3xl mb-2 tracking-tight text-gray-950">
+        Your Account Details
       </h2>
       <div className="py-20 pb-24 pt-6">
         <div className="container mx-auto p-0 space-y-8">
+          <div className="w-full grid grid-cols-1 gap-2 md:grid-cols-2">
+            {isAvatarLoading ? (
+              <div className="flex items-center">
+                <span className="italic font-semibold text-green-600">
+                  Uploading please wait...
+                </span>
+                <div className="loader-image ml-auto mr-auto"></div>
+              </div>
+            ) : (
+              <>
+                <div className="gap-2 flex items-center">
+                  <label className=" text-gray-500 text-sm font-bold">
+                    Avatar Image
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="file"
+                      onChange={(e) =>
+                        handleAvatarFileChange(e, setAvatar, "avatar")
+                      }
+                      className="hidden"
+                      id="avatarInput"
+                    />
+                    <div
+                      className="w-24 h-24 border-dotted border-2 border-orangeBg rounded-full flex items-center justify-center cursor-pointer"
+                      onClick={() =>
+                        document.getElementById("avatarInput").click()
+                      }
+                    >
+                      {profileInfo?.avatarUrl ? (
+                        <Image
+                          src={profileInfo?.avatarUrl}
+                          width={500}
+                          height={500}
+                          alt="Avatar"
+                          className="w-full h-full rounded-full aspect-auto object-cover"
+                        />
+                      ) : (
+                        <span className="text-sky-400 relative">
+                          <FaCamera size={24} />
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+            {isIdLoading ? (
+              <div className="flex items-center">
+                <span className="italic font-semibold text-green-600">
+                  Uploading please wait...
+                </span>
+                <div className="loader-image ml-auto mr-auto"></div>
+              </div>
+            ) : (
+              <div className="gap-2 flex items-center">
+                <label className=" text-gray-500 text-sm font-bold">
+                  ID Document
+                </label>
+                <div className="relative">
+                  <input
+                    type="file"
+                    onChange={(e) =>
+                      handleIdFileChange(e, setIdDocument, "idUrl")
+                    }
+                    className="hidden"
+                    id="idDocumentInput"
+                  />
+                  <div
+                    className="w-24 h-24 border-dotted border-2 overflow-hidden border-orangeBg rounded flex items-center justify-center cursor-pointer"
+                    onClick={() =>
+                      document.getElementById("idDocumentInput").click()
+                    }
+                  >
+                    {profileInfo?.idUrl ? (
+                      <Image
+                        src={profileInfo?.idUrl}
+                        width={500}
+                        height={500}
+                        alt="ID Document"
+                        className="w-full h-full aspect-auto object-cover"
+                      />
+                    ) : (
+                      <span className="text-sky-400 relative">
+                        <Image
+                          src="/document.jpg"
+                          width={500}
+                          height={500}
+                          alt="ID Document"
+                          className="w-full h-full object-cover"
+                        />
+                        <FaCamera
+                          className="absolute -bottom-2 -right-2"
+                          size={24}
+                        />
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
           <Form
             action={handleUpdateAccount}
             formControls={
               profileInfo?.role === "CANDIDATE"
                 ? candidateOnboardFormControls.filter(
                     (formControl) =>
-                      formControl.name !== "resume" &&
+                      formControl.name !== "avatarUrl" &&
                       formControl.name !== "documentPhoto"
                   )
                 : recruiterOnboardFormControls

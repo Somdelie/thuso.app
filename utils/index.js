@@ -1,5 +1,6 @@
 import {
   Category,
+  CategoryOutlined,
   Chat,
   LineStyle,
   Newspaper,
@@ -30,7 +31,7 @@ export const initialRecruiterFormData = {
   companyName: "",
 };
 
-// this is recruiter form controls
+// Candidate form controls
 export const candidateOnboardFormControls = [
   {
     label: "Name",
@@ -39,11 +40,10 @@ export const candidateOnboardFormControls = [
     componentType: "input",
   },
   {
-    label: "Resume",
-    name: "resume",
+    label: "Avatar",
+    name: "avatarUrl",
     componentType: "file",
   },
-
   {
     label: "Preferred Job Location",
     name: "preferredJobLocation",
@@ -53,25 +53,19 @@ export const candidateOnboardFormControls = [
   {
     label: "Skills",
     name: "skills",
-    placeholder: "List your services e.g Painter, Plumbing etc",
+    placeholder: "List your services e.g Painter",
     componentType: "input",
   },
 ];
 
-// default initial candidate Recruiter Form Data
+// Default initial candidate form data
 export const initialCandidateFormData = {
   fullName: "",
-  resume: "",
-  companyName: "",
-  currentJobLocation: "",
+  avatarUrl: "",
   preferredJobLocation: "",
-  currentSalary: "",
-  noticePeriod: "",
-  skills: "",
-  totalExperience: "",
-  collegeLocation: "",
-  graduatedYear: "",
+  skills: [], // Updated to be an array
   linkedinProfile: "",
+  country: "",
 };
 
 // Example options for select input
@@ -270,6 +264,11 @@ export const AdminLinks = [
     title: "Categories",
     link: "/admin/categories",
     icon: <Category />,
+  },
+  {
+    title: "Sub Categories",
+    link: "/admin/sub-categories",
+    icon: <CategoryOutlined />,
   },
   {
     title: "Jobs",

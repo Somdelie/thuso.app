@@ -90,7 +90,7 @@ const megaMenu = [
 
 export default function MegaMenu({ categories, premiumProfiles }) {
   const pathname = usePathname();
-  console.log(pathname);
+  // console.log(pathname);
 
   if (pathname !== "/") return null;
   return (
@@ -125,19 +125,20 @@ export default function MegaMenu({ categories, premiumProfiles }) {
                   className="text-muted-foreground w-full hover:bg-white border-b p-4 hover:text-navblue transition duration-75"
                 >
                   <div className="text-sm font-medium flex items-center gap-2 text-navblue leading-none">
-                    <Avatar>CN</Avatar> {profile?.fullName}
+                    <Avatar src={profile?.avatarUrl} alt="U"></Avatar>{" "}
+                    {profile?.fullName}
                   </div>
                   <div className="flex items-center gap-2 mt-1">
-                    {profile?.skills
-                      ?.split(",")
-                      .slice(0, 3)
-                      .map((skillItem, i) => (
-                        <div key={i}>
-                          <p className="text-[12px] font-medium text-gray-400">
-                            {skillItem},
-                          </p>
+                    <div className="flex gap-2 flex-wrap">
+                      {profile?.skills.slice(0, 3).map((skill, i) => (
+                        <div
+                          key={i}
+                          className="border px-2 py-1 text-muted-foreground rounded"
+                        >
+                          <p className="text-[13px] font-medium">{skill}</p>
                         </div>
                       ))}
+                    </div>
                   </div>
                   <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                     <span className="text mt-2 flex items-center gap-1">

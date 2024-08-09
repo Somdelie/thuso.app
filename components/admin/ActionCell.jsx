@@ -11,11 +11,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import EditModal from "./EditModal";
+import ViewModal from "./ViewModal";
 import { deleteJobAction, editJobAction } from "@/actions/create-job";
 import { updatedProfileAdmin } from "@/actions/create-profile";
 
 const ActionCell = ({ row, type, formControls }) => {
-  const [showActionDialog, setShowActionDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [showViewDialog, setShowViewDialog] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState(null);
 
   const handleSave = async (data) => {
@@ -28,7 +30,7 @@ const ActionCell = ({ row, type, formControls }) => {
         await updatedProfileAdmin(rowId, data, "/admin/profiles");
         console.log(`Profile with ID ${rowId} updated.`);
       }
-      setShowActionDialog(false);
+      setShowEditDialog(false);
       // Optionally, you might want to call a function to refresh the UI or re-fetch data
     } catch (error) {
       console.error(`Failed to update ${type}:`, error);
@@ -37,15 +39,23 @@ const ActionCell = ({ row, type, formControls }) => {
 
   const handleEdit = (rowData) => {
     setSelectedRowData(rowData);
-    setShowActionDialog(true);
+    setShowEditDialog(true);
   };
 
-  const closeDialog = () => {
-    setShowActionDialog(false);
+  const handleView = (rowData) => {
+    setSelectedRowData(rowData);
+    setShowViewDialog(true);
+  };
+
+  const closeEditDialog = () => {
+    setShowEditDialog(false);
     setSelectedRowData(null);
   };
 
-  console.log(row?.original.id);
+  const closeViewDialog = () => {
+    setShowViewDialog(false);
+    setSelectedRowData(null);
+  };
 
   const handleDelete = async () => {
     const rowId = row?.original.id;
@@ -72,6 +82,9 @@ const ActionCell = ({ row, type, formControls }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem onClick={() => handleView(row)}>
+            View
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => handleEdit(row)}>
             Edit
           </DropdownMenuItem>
@@ -81,13 +94,20 @@ const ActionCell = ({ row, type, formControls }) => {
       </DropdownMenu>
 
       {selectedRowData && (
-        <EditModal
-          row={selectedRowData}
-          onSave={handleSave}
-          showActionDialog={showActionDialog}
-          setShowActionDialog={setShowActionDialog}
-          formControls={formControls}
-        />
+        <>
+          <EditModal
+            row={selectedRowData}
+            onSave={handleSave}
+            showActionDialog={showEditDialog}
+            setShowActionDialog={setShowEditDialog}
+            formControls={formControls}
+          />
+          <ViewModal
+            row={selectedRowData}
+            showActionDialog={showViewDialog}
+            setShowActionDialog={setShowViewDialog}
+          />
+        </>
       )}
     </>
   );

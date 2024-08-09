@@ -2,7 +2,7 @@ import {
   fetchJobApplicationsForCandidate,
   fetchJobApplicationsForRecruiter,
 } from "@/actions/application";
-import { fetchCategories } from "@/actions/categoryAction";
+import { fetchCategories, fetchSubcategories } from "@/actions/categoryAction";
 import {
   fetchJobsForCandidateAction,
   fetchJobsForRecruiterAction,
@@ -20,14 +20,15 @@ const JobPage = async () => {
   const jobList =
     profileInfo?.role === "CANDIDATE"
       ? await fetchJobsForCandidateAction(user?.id)
-      : await fetchJobsForRecruiterAction(user?.id);
+      : await fetchJobsForRecruiterAction(profileInfo?.id);
 
   const getJobApplicationList =
     profileInfo?.role === "CANDIDATE"
       ? await fetchJobApplicationsForCandidate(user?.id)
-      : await fetchJobApplicationsForRecruiter(user?.id);
+      : await fetchJobApplicationsForRecruiter(profileInfo?.id);
 
   const categories = await fetchCategories();
+  const subCategories = await fetchSubcategories();
 
   if (!user) redirect("/browse");
 
@@ -40,6 +41,7 @@ const JobPage = async () => {
         profileInfo={profileInfo}
         jobList={jobList}
         categories={categories}
+        subCategories={subCategories}
         jobApplications={getJobApplicationList}
       />
     </div>

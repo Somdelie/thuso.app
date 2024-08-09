@@ -3,33 +3,23 @@ import prismaDB from "@/utils/dbConnect";
 import { revalidatePath } from "next/cache";
 
 // Create a new profile
-// Create a new profile
 export async function createProfile(data, pathToRevalidate) {
   const { recruiterInfo, candidateInfo, ...rest } = data;
 
   // Flatten and map the fields according to the Prisma schema
   const profileData = {
     ...rest,
-    fullName: recruiterInfo?.fullName || candidateInfo?.fullName,
-    isAdmin: false,
-    documentPhoto: candidateInfo?.documentPhoto,
-    resume: candidateInfo?.resume,
-    currentJobLocation: candidateInfo?.currentJobLocation,
-    preferredJobLocation: candidateInfo?.preferredJobLocation,
-    currentSalary: candidateInfo?.currentSalary,
-    noticePeriod: candidateInfo?.noticePeriod,
-    skills: candidateInfo?.skills,
-    totalExperience: candidateInfo?.totalExperience,
-    collegeLocation: candidateInfo?.collegeLocation,
-    graduatedYear: candidateInfo?.graduatedYear,
-    linkedinProfile: candidateInfo?.linkedinProfile,
-    isCandidatePremium: candidateInfo?.isCandidatePremium,
   };
+
+  // console.log(profileData, "this is the data to be created");
+
+  // Uncomment these lines to actually create the profile in the database
   const profile = await prismaDB.profile.create({
     data: profileData,
   });
-  revalidatePath(pathToRevalidate);
 
+  revalidatePath(pathToRevalidate);
+  console.log(profile, "Profile created successfully");
   return profile;
 }
 
@@ -54,7 +44,7 @@ export async function updateProfile(userId, data, pathToRevalidate) {
 }
 
 // Update a profile
-export async function updatedProfile(userId, data, pathToRevalidate) {
+export async function updatedProfile(userId, pathToRevalidate) {
   const profile = await prismaDB.profile.update({
     where: { id: userId },
     data: {
@@ -104,6 +94,16 @@ export async function updatedProfileAdmin(
 
 export async function getAllProfiles() {
   const profiles = await prismaDB.profile.findMany({
+    include: {
+      candidateJobs: true,
+    },
+  });
+  // console.log(profiles, "Jobs profile");
+  return profiles;
+}
+export async function getAllCandidates() {
+  const profiles = await prismaDB.profile.findMany({
+    where: { role: "CANDIDATE" },
     include: {
       candidateJobs: true,
     },

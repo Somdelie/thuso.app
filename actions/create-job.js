@@ -1,46 +1,56 @@
 "use server";
 import prismaDB from "@/utils/dbConnect";
+import { generateSlug } from "@/utils/generateSlug";
 import { revalidatePath } from "next/cache";
 
 // Create a new job
-export async function postNewJobAction(formData, pathToRevalidate) {
+export async function postNewJobAction(data, pathToRevalidate) {
+  const { categoryId, subcategoryId, profileId, title, ...rest } = data;
+
+  const slug = generateSlug(title);
+
   const jobData = {
-    ...formData,
     isFeatured: false,
     applications: {
       create: [],
     },
-    Category: {
-      connect: { id: formData.Category },
-    },
-    Profile: {
-      connect: { id: formData.profileId },
-    },
+    ...rest,
+    categoryId: categoryId,
+    subcategoryId: subcategoryId,
+    profileId: profileId,
+    slug: slug,
   };
 
-  delete jobData.profileId; // Remove profileId from the top-level data
+  console.log(jobData, "this is the data to be created");
 
   const job = await prismaDB.job.create({
     data: jobData,
   });
-  revalidatePath(pathToRevalidate);
 
+  revalidatePath(pathToRevalidate);
   return job;
 }
 
 // Fetch jobs for a recruiter
 export async function fetchJobsForRecruiterAction(id) {
-  const result = await prismaDB.job.findMany({
-    where: {
-      recruiterId: id,
-    },
-    include: {
-      applications: true,
-      Category: true,
-    },
-  });
-
-  return result;
+  try {
+    console.log(`Fetching jobs for recruiter ID: ${id}`);
+    const result = await prismaDB.job.findMany({
+      where: {
+        recruiterId: id,
+      },
+      // Uncomment these lines if you need related data
+      include: {
+        applications: true,
+        Category: true,
+      },
+    });
+    console.log(`Fetched jobs for recruiter:`, result);
+    return result;
+  } catch (error) {
+    console.error(`Error fetching jobs for recruiter ID ${id}:`, error);
+    throw new Error("Failed to fetch jobs for recruiter");
+  }
 }
 
 // Fetch all jobs

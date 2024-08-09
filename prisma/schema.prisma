@@ -8,30 +8,45 @@ generator client {
 }
 
 model Category {
-  id           String @id @default(auto()) @map("_id") @db.ObjectId
-  categoryName String
-  jobs         Job[]
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  categoryName  String        @default("Other")
+  imageUrl      String?
+  imagePublicId String?
+  slug          String        @unique
+  jobs          Job[]
+  subCategories Subcategory[]
+  profiles      Profile[]
 }
 
 model Job {
   id           String        @id @default(auto()) @map("_id") @db.ObjectId
   companyName  String?
   title        String
+  slug         String        @unique
   type         String
   location     String
+  country      String
+  state        String
+  city         String
+  phoneNumber  String?
+  email        String
   experience   String?
   description  String
-  skills       String?
+  skills       String[]
   recruiterId  String
-  isFeatured   Boolean
+  isFeatured   Boolean       @default(false)
+  isPublished  Boolean       @default(false)
   applications Application[]
+  ratings      Float?
 
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  Category   Category? @relation(fields: [categoryId], references: [id])
-  categoryId String?   @db.ObjectId
-  Profile    Profile?  @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  profileId  String?   @db.ObjectId
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  Subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
+  Category      Category?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  categoryId    String?      @db.ObjectId
+  subcategoryId String?      @db.ObjectId
+  Profile       Profile?     @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId     String?      @db.ObjectId
 }
 
 model Application {
@@ -53,11 +68,16 @@ model Profile {
   id                  String    @id @default(auto()) @map("_id") @db.ObjectId
   userId              String
   fullName            String
+  address             String
+  phoneNumber         String?
+  dateOfBirth         DateTime?
+  gender              String?
   role                Role
   email               String
-  isPremiumUser       Boolean
+  isPremiumUser       Boolean   @default(false)
   memberShipType      String?
-  isAdmin             Boolean
+  isApproved          Boolean   @default(false)
+  isAdmin             Boolean   @default(false)
   memberShipStartDate DateTime?
   memberShipEndDate   DateTime?
 
@@ -66,29 +86,48 @@ model Profile {
 
   // Recruiter specific fields
   // Candidate specific fields
-  resume               String?
+  avatarUrl            String?
+  idUrl                String?
+  country              String?
+  state                String?
+  city                 String?
   companyName          String?
-  currentJobLocation   String?
   preferredJobLocation String?
-  currentSalary        String?
-  noticePeriod         String?
-  skills               String?
-  totalExperience      String?
-  collegeLocation      String?
-  graduatedYear        String?
   linkedinProfile      String?
   isCandidatePremium   Boolean?
+  ratings              Float?
+  skills               String[]
   candidateJobs        candidateJobs[]
   jobs                 Job[]
+  Feeds                Feed[]
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @default(now())
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  Subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
+  Category      Category?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  categoryId    String?      @db.ObjectId
+  subcategoryId String?      @db.ObjectId
+}
 
-  Feeds Feed[]
+model Subcategory {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  subcategoryName String
+  desc            String?
+  slug            String    @unique
+  onMegaMenu      Boolean   @default(false)
+  jobs            Job[]
+  profiles        Profile[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @default(now())
+  Category        Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  categoryId      String?   @db.ObjectId
+  subcategoryId   String?   @db.ObjectId
 }
 
 model candidateJobs {
-  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  isStarted      Boolean @default(false)
+  isFinished     Boolean @default(false)
   fullName       String
   email          String
   phoneNumber    String
@@ -98,19 +137,20 @@ model candidateJobs {
   profileId String?  @db.ObjectId
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now())
 }
 
 model Feed {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
   userId   String
   fullName String
+  slug     String
   message  String
-  image    String?
+  imageUrl String?
   likes    Like[]
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now())
 
   Profile   Profile? @relation(fields: [profileId], references: [id], onDelete: Cascade)
   profileId String?  @db.ObjectId
@@ -124,7 +164,7 @@ model Like {
   feedId          String? @db.ObjectId
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now())
 }
 
 enum Role {

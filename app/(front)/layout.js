@@ -24,7 +24,7 @@ export default async function ClientLayout({ children }) {
       <div className="w-full border-b bg-heroBg text-muted-foreground sticky z-30 top-16 left-0">
         <MegaMenu categories={categories} premiumProfiles={premiumProfiles} />
       </div>
-      <main className=" overflow-x-hidden">{children}</main>
+      <main className=" overflow-x-hidden min-h-[55vh]">{children}</main>
       <Footer />
     </div>
   );

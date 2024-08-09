@@ -19,6 +19,7 @@ const JobListing = ({
   jobList,
   jobApplications,
   categories,
+  subCategories,
 }) => {
   const [filteredJobs, setFilteredJobs] = useState(jobList);
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -65,6 +66,7 @@ const JobListing = ({
                 profileInfo={profileInfo}
                 user={user}
                 categories={categories}
+                subCategories={subCategories}
               />
             )}
           </div>

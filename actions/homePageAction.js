@@ -3,6 +3,7 @@ import prismaDB from "@/utils/dbConnect";
 export async function getPremiumCandidates() {
   const result = await prismaDB.profile.findMany({
     where: {
+      isApproved: true,
       isPremiumUser: true,
       role: "CANDIDATE",
       memberShipType: "Premium",
@@ -14,6 +15,7 @@ export async function getPremiumCandidates() {
 export async function getGoldCandidates() {
   const result = await prismaDB.profile.findMany({
     where: {
+      isApproved: true,
       isPremiumUser: true,
       role: "CANDIDATE",
       OR: [{ memberShipType: "Premium" }, { memberShipType: "Gold" }],

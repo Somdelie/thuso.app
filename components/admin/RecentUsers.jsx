@@ -8,7 +8,7 @@ const RecentUsers = ({ latestProfiles }) => {
     return `${firstName[0]}${lastName[0]}`;
   };
   return (
-    <Card x-chunk="dashboard-01-chunk-5" className="md:min-h-screen">
+    <Card x-chunk="dashboard-01-chunk-5" className="md:min-h-[70vh]">
       <CardHeader>
         <CardTitle>Recent Profiles</CardTitle>
       </CardHeader>
